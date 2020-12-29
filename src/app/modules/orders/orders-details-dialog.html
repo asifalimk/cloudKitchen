@@ -1,0 +1,67 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+    <h2 class="m-0" mat-dialog-title>Order Details</h2>
+    <div fxLayout="row">
+        <button mat-icon-button>
+            <mat-icon>print</mat-icon>
+        </button>
+        <button (click)="onNoClick()" mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+
+
+<div mat-dialog-content class="mt-3">
+
+    <h3 class="m-0 fw-500">#Id1235858</h3>
+    <p class="fw-2">Status</p>
+
+    <ng-container>
+        <h3 class="m-0 fw-500">AsifAli Mk</h3>
+        <p class="text-muted m-0">9946959954</p>
+        <p class="text-muted m-0">kalathil house</p>
+        <p class="text-muted m-0">Tanur</p>
+        <p class="text-muted m-0">Payment </p>
+    </ng-container>
+    <mat-divider></mat-divider>
+
+    <div class="mt-2">
+        <h3 class="m-0">Items</h3>
+
+        <div class="mt-2" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <div>
+                <span class="text-muted">Qty</span>
+                <div fxLayout="column">
+                    <span>1</span>
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+            </div>
+
+            <div>
+                <span class="text-muted">Name</span>
+                <div fxLayout="column">
+                    <span>Butter Chicken</span>
+                    <span>Butter Nan</span>
+                    <span>Cock</span>
+                </div>
+            </div>
+
+            <div>
+                <span class="text-muted">Amount</span>
+                <div fxLayout="column" fxLayoutAlign="flex-end center">
+                    <span>120</span>
+                    <span>120</span>
+                    <span>120</span>
+                </div>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="mt-2" fxLayout="row" fxLayoutAlign="flex-end center">
+            <span>Total:</span>
+            <span>360</span>
+        </div>
+    </div>
+
+</div>

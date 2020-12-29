@@ -1,0 +1,41 @@
+
+// Custom Theming for Angular Material
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$dp-primary-white: #FFFFFF;
+
+//warn
+$dp-primary-red-palette: (
+  500:$danger-color, // Custom
+  contrast: (
+    500: hsl(0, 0%, 100%)
+  )
+);
+
+//primary
+$dp-primary-indigo-palette: (
+  500: $primary-color,
+  contrast: (
+    500: $light-primary-text,
+  )
+);
+
+//accent
+$dp-primary-grey-palette: (
+  500: $other-medium-gray,
+  contrast: (
+    500: $light-primary-text
+  )
+);
+
+$dp-app-primary: mat-palette($dp-primary-indigo-palette);
+$dp-app-accent:  mat-palette($dp-primary-grey-palette);
+$dp-app-warn:    mat-palette($dp-primary-red-palette);
+
+
+$material-custom-theme: mat-light-theme($dp-app-primary, $dp-app-accent, $dp-app-warn);
+
+@include angular-material-theme($material-custom-theme);
+

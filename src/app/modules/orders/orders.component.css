@@ -1,0 +1,21 @@
+.bordered-icon{
+    border-radius: 50%;
+    width:55px;
+    height: 55px; 
+}
+
+.card{
+    border-radius: 10px;
+}
+
+.order-container{
+    background-color: #f4f3ef !important;
+}
+
+.fw-500{
+    font-weight: 700px !important;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  }

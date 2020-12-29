@@ -1,0 +1,46 @@
+<div class="orders-component" fxLayout="column" fxLayoutGap="20px">
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px">
+
+        <mat-card fxFlex="24" class="mat-elevation-z card" fxLayout="column" fxLayoutAlign="center center">
+            <div class="bordered-icon bg-warning" fxLayoutAlign="center center">
+                <mat-icon>pending_actions</mat-icon>
+            </div>
+            <h2 class="m-0">20</h2>
+            <p class="card-category">Pending</p>
+        </mat-card>
+
+        <mat-card fxFlex="24" class="mat-elevation-z card" fxLayout="column" fxLayoutAlign="center center">
+            <div class="bordered-icon bg-info" fxLayoutAlign="center center">
+                <mat-icon>task_alt</mat-icon>
+            </div>
+            <h2 class="m-0">20</h2>
+            <p class="card-category">Accepted</p>
+        </mat-card>
+
+
+        <mat-card fxFlex="24" class="mat-elevation-z card" fxLayout="column" fxLayoutAlign="center center">
+            <div class="bordered-icon bg-success" fxLayoutAlign="center center">
+                <mat-icon>assignment_turned_in</mat-icon>
+            </div>
+            <h2 class="m-0">20</h2>
+            <p class="card-category">Delivered</p>
+        </mat-card>
+
+
+        <mat-card fxFlex="24" class="mat-elevation-z card" fxLayout="column" fxLayoutAlign="center center">
+            <div class="bordered-icon bg-danger" fxLayoutAlign="center center">
+                <mat-icon>report</mat-icon>
+            </div>
+            <h2 class="m-0">20</h2>
+            <p class="card-category">Rejected</p>
+        </mat-card>
+
+    </div>
+
+    <div class="w-100">
+        <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData" (rowClicked)="rowClicked($event)">
+        </app-table-widget>
+    </div>
+
+</div>

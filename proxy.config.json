@@ -1,0 +1,8 @@
+{
+    "/api/*":{
+        "target":"http://phplaravel-401379-1623642.cloudwaysapps.com/",
+        "secure":"false",
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}

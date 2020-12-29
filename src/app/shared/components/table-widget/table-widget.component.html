@@ -1,0 +1,212 @@
+<div class="table-wrapper">
+
+	<div>
+		<div fxLayoutAlign="space-between center">
+
+			<h2>{{tableData?.tableName}}</h2>
+			<!-- <div fxLayout="row" fxLayoutAlign="flex-end center" fxLayoutGap="10px">
+					<div fxLayout="row" *ngFor="let bulkAction of bulkActions; let tableIndex = index;"
+						fxLayoutAlign="flex-end center" fxLayoutGap="10px">
+						<button mat-icon-button (click)="eventActionButtonPressedAll(bulkAction.action)"
+								[disabled]="isOneSelected" [title]="bulkAction.tooltip">
+							<mat-icon>{{ bulkAction.icon}}</mat-icon>
+						</button>
+					</div>
+				
+				</div> -->
+
+			<mat-form-field appearance="outline" *ngIf="tableSearch !== undefined && tableSearch == true"
+				style="font-size: 14px;">
+				<mat-label>search</mat-label>
+				<input type="text" matInput (keyup)="applyFilter($event.target.value)">
+				<mat-icon color="primary" matSuffix>search</mat-icon>
+			</mat-form-field>
+		</div>
+
+
+		<mat-table class="w-100" [dataSource]="dataSources" *ngIf="tableData" multiTemplateDataRows>
+			<!-- Grouped Status Header -->
+			<ng-container cdkColumnDef="groupHeader">
+				<mat-cell [attr.colspan]="tableData.columnStructure.length" *cdkCellDef="let group">
+					<ng-container *ngIf="table.group !== undefined">
+						<span class="group" [style.backgroundColor]="table.group.color">
+							{{ table.group.name }}
+						</span>
+					</ng-container>
+				</mat-cell>
+			</ng-container>
+			<!-- Table Row -->
+			<!-- <mat-row class="group-header"
+						*cdkRowDef="let row; columns: ['groupHeader']; when: isFirstIndex"
+						[style.display]="((table.group?.name || table.group) === undefined ? 'none' : '')"></mat-row> -->
+
+
+			<!-- Plain Table -->
+			<ng-container [cdkColumnDef]="column.key" *ngFor="let column of tableData.columnStructure; let i = index;">
+				<mat-header-cell *cdkHeaderCellDef>
+					<span class="text-header" *ngIf="column.type !== 'select'">{{ column.name }}</span>
+					<mat-checkbox *ngIf="column.type === 'select'" (change)="$event ? masterToggle() : null"
+						[checked]="selection.hasValue() && isAllSelected()"
+						[indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+					</mat-checkbox>
+				</mat-header-cell>
+
+				<mat-cell class="table-cell-padding position-relative" *cdkCellDef="let row"
+					(click)="(column.type === 'status' || column.type === 'grouped_button'  || column.type === 'toggle_slider' || column.type === 'select') ? $event.stopPropagation() : ''"
+					[style]="column.type === 'status' ? 'width: 300px; max-width: 300px;' : ''">
+					<!-- Status Column -->
+
+					<ng-container [ngSwitch]="column.type">
+						<!-- Grouped Buttons -->
+						<div fxLayout="row wrap" fxLayoutAlign="flex-start center" fxLayoutGap="10px"
+							*ngSwitchCase="'grouped_button'">
+							<span fxLayout="row wrap" fxLayoutAlign="flex-start center"
+								*ngFor="let button of row[column.key]; let groupedColumnIndex = index;">
+								<button mat-icon-button (click)="eventActionButtonPressed(row, button)">
+									<mat-icon [svgIcon]="button.icon"></mat-icon>
+								</button>
+							</span>
+						</div>
+
+						<!-- Toggle Slider -->
+						<div *ngSwitchCase="'toggle_slider'">
+							<ng-container>
+								<section class="example-section">
+									<mat-slide-toggle class="example-margin" color="green" [checked]="row[column.key]"
+										disabled=false (change)="eventActionToggleButtonPressed(row)">
+									</mat-slide-toggle>
+								</section>
+							</ng-container>
+						</div>
+						<!-- button -->
+						<div *ngSwitchCase="'button'">
+							<ng-container>
+								<section class="example-section">
+									<button mat-icon-button>
+										<mat-icon>print</mat-icon>
+									</button>
+								</section>
+							</ng-container>
+						</div>
+
+						<!-- group -->
+						<div fxLayout="column" *ngSwitchCase="'group'">
+							<ng-container *ngFor="let items of column.cols">
+								<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+									<mat-icon class="table-icon" color="accent">{{items?.icon}}</mat-icon>
+									<span class="fw-12">{{ row[column.key][items.key] }}</span>
+								</div>
+							</ng-container>
+						</div>
+
+						<!-- single -->
+						<div *ngSwitchCase="'single'">
+							<div *ngIf="column.parent;else singleKey;">
+								{{ row[column.parent][column.key]}}
+							</div>
+							<ng-template #singleKey>
+								{{ row[column.key]}}
+							</ng-template>
+						</div>
+
+						<!-- date {{ row[column.key] | date: 'dd/MM/yyyy'}}-->
+						<div *ngSwitchCase="'date'">
+							{{ row[column.key]}}
+						</div>
+
+						<!-- image -->
+						<div *ngSwitchCase="'image'">
+
+							<div *ngIf="column.parent;else imageKey;">
+								<img class="image" [src]="column.link+row[column.parent][column.key]" alt="">
+							</div>
+							<ng-template #imageKey>
+								<img class="image" [src]="column.link+row[column.key]" alt="">
+							</ng-template>
+						</div>
+						<!-- chip -->
+						<div *ngSwitchCase="'chip'">
+							<mat-chip-list>
+								<mat-chip color="primary" selected>Primary fish</mat-chip>
+							</mat-chip-list>
+						</div>
+						<!-- select -->
+						<div *ngSwitchCase="'select'">
+							<ng-container>
+								<mat-checkbox (click)="$event.stopPropagation()"
+									(change)="$event ? selection.toggle(row) : null"
+									[checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+								</mat-checkbox>
+							</ng-container>
+						</div>
+
+						<ng-container *ngSwitchCase="'menu'">
+
+
+							<button mat-icon-button #menuTrigger="matMenuTrigger" (click)="$event.stopPropagation()"
+								[matMenuTriggerFor]="menu">
+								<mat-icon>{{menuTrigger.menuOpen ? 'expand_less' : 'expand_more'}}</mat-icon>
+							</button>
+
+							<mat-menu #menu="matMenu">
+								<ng-container>
+									<button mat-menu-item *ngFor="let menues of column.cols"
+										(click)="matMenuItemClicked(menues)">
+										<span>{{menues}}</span>
+									</button>
+								</ng-container>
+							</mat-menu>
+
+						</ng-container>
+
+						<ng-container *ngSwitchCase="'button'">
+							<button (click)="$event.stopPropagation()" mat-button color="primary">Primary</button>
+						</ng-container>
+
+					</ng-container>
+
+				</mat-cell>
+			</ng-container>
+
+			<!-- Table Headers -->
+			<ng-container>
+				<mat-header-row class="table-header-row table-sticky-header-row table-master-header"
+					*cdkHeaderRowDef="displayedColumns; sticky: true;"></mat-header-row>
+			</ng-container>
+
+			<!-- Table Rows -->
+			<mat-row class="table-row" [id]="'table-row-' + row.id " matRipple
+				*cdkRowDef="let row; columns: displayedColumns;"
+				[ngStyle]="{'border-right-color': row?.content.status =='1'  ? '#fbc658;' : row.content.status =='rejected' ? '2': row.content.status=='3'  ? '#6bd098':row.content.status=='4'  ? '#17a2b8':'#ddd9d9'}"
+				(click)="tableRowClicked(row)"></mat-row>
+
+			<!-- Sub Rows -->
+			<ng-container cdkColumnDef="SubItems">
+				<mat-cell *cdkCellDef="let subItem" colspan="999" class="p-0 remove-hover position-relative">
+					<div class="subitems-highlighter"></div>
+					<div class="subitems-table-wrapper" [@detailExpand]="subItem.expanded ? 'expanded' : 'collapsed'">
+						<table class="w-100 inner-table" #innerTables mat-table [dataSource]="subItem.SubItems">
+							<ng-container [cdkColumnDef]="subColumn"
+								*ngFor="let subColumn of getChildrenKeys(subItem); let j = index;">
+								<mat-cell *cdkCellDef="let subRow">
+									<div *ngIf="j === 0">
+										<mat-icon style="margin-right: 12px;">arrow_right</mat-icon>
+										{{ subRow[subColumn] }}
+									</div>
+									<div *ngIf="j">
+										{{ subRow[subColumn] }}
+									</div>
+								</mat-cell>
+							</ng-container>
+							<mat-row *cdkRowDef="let subRow; columns: getChildrenKeys(subItem);"></mat-row>
+						</table>
+					</div>
+				</mat-cell>
+			</ng-container>
+
+			<!-- <mat-row class="mat-elevation-z1 table-row subitems-table-row "
+						*cdkRowDef="let row; columns: ['SubItems']; when: hasChildren"></mat-row> -->
+		</mat-table>
+		<mat-paginator [pageSizeOptions]="[10]"></mat-paginator>
+	</div>
+</div>
