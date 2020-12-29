@@ -118,10 +118,10 @@
 						<div *ngSwitchCase="'image'">
 
 							<div *ngIf="column.parent;else imageKey;">
-								<img class="image" [src]="column.link+row[column.parent][column.key]" alt="">
+								<img class="image" [src]="column.path+row[column.parent][column.key]" alt="">
 							</div>
 							<ng-template #imageKey>
-								<img class="image" [src]="column.link+row[column.key]" alt="">
+								<img class="image" [src]="column.path+row[column.key]" alt="">
 							</ng-template>
 						</div>
 						<!-- chip -->

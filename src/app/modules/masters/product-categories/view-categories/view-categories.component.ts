@@ -24,7 +24,7 @@ export class ViewCategoriesComponent implements OnInit {
       name: "Image",
       key: "image",
       parent: "content",
-      link: "https://phplaravel-401379-1623642.cloudwaysapps.com/storage/media/category/",
+      path: "https://phplaravel-401379-1623642.cloudwaysapps.com/storage/media/category/",
       type: "image",
       cols: ["image"]
     },
