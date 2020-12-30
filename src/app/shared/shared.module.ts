@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TableWidgetComponent } from './components/table-widget/table-widget.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
@@ -29,7 +28,6 @@ import {MatListModule} from '@angular/material/list';
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule,
     MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -54,7 +52,6 @@ import {MatListModule} from '@angular/material/list';
   exports: [
     FormsModule,
     ReactiveFormsModule,
-    NgbModule,
     MatTableModule,
     TableWidgetComponent,
     MatButtonModule,

@@ -69,14 +69,13 @@ export class NavbarComponent implements OnInit {
     this.sidebarVisible = true;
   };
   sidebarClose() {
-    const html = document.getElementsByTagName('html')[0];
-    const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
-    if (window.innerWidth < 991) {
-      setTimeout(function () {
-        mainPanel.style.position = '';
-      }, 500);
-    }
-
+    // const html = document.getElementsByTagName('html')[0];
+    // const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
+    // if (window.innerWidth < 991) {
+    //   setTimeout(function () {
+    //     mainPanel.style.position = '';
+    //   }, 500);
+    // }
     this.sidebarVisible = false;
 
   };

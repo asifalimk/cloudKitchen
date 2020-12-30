@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable, Subscription, timer } from 'rxjs';
 import { OrdersService } from './orders.service';
 @Component({
   selector: 'app-orders',
@@ -22,11 +23,11 @@ export class OrdersComponent implements OnInit {
       name: "User",
       key: "user",
       type: "group",
-      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, { "key": "schedule", "icon": "schedule" }]
+      cols: [{ "key": "name", "icon": "person" },{ "key": "mobile", "icon": "smartphone" },{ "key": "schedule", "icon": "schedule" }]
     },
     {
       name: "Location",
-      key: "location",
+      key: "created_at",
       type: "single",
       cols: []
     },
@@ -50,21 +51,28 @@ export class OrdersComponent implements OnInit {
     }
   ];
 
-
   public tableWidgetData: {
     columnStructure: Array<object>,
     tableName: string,
     data: Array<object>,
     statusInfoNChanges: object,
     tableSearch: boolean
-
   };
 
+  subscription: Subscription;
+
+  everyThirtySeconds: Observable<number> = timer(0, 30000);
 
   ngOnInit(): void {
-
-    this.fetchOrders();
+    this.subscription = this.everyThirtySeconds.subscribe(() => {
+      this.fetchOrders();
+    });
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
   async initTableData() {
     this.tableWidgetData = {
@@ -81,13 +89,13 @@ export class OrdersComponent implements OnInit {
    * @param data 
    */
   rowClicked(data: any) {
-    this.openDialog();
+    this.openDialog(data);
   }
 
-  openDialog(): void {
+  openDialog(data): void {
     const dialogRef = this.dialog.open(OrderDetailsDialog, {
       width: '300px',
-      data: { name: 'name', animal: 'animal' }
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -98,9 +106,8 @@ export class OrdersComponent implements OnInit {
   /**
    * fetch list of orders
    */
-  fetchOrders() {
+  fetchOrders(): void {
     this.ordersService.getListOfOrders().subscribe((res: any) => {
-      console.log(res)
       this.tableData = res.success;
       this.initTableData();
     })
@@ -120,6 +127,7 @@ export class OrderDetailsDialog {
     public dialogRef: MatDialogRef<OrderDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
+    console.log(this.data)
   }
 
 

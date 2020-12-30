@@ -11,7 +11,7 @@ export class AdminLayoutComponent implements OnInit {
   routes=ROUTES;
 
   ngOnInit() { 
-    console.log(this.routes)
+    
   }
 }
 

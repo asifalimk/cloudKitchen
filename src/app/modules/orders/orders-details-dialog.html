@@ -13,25 +13,30 @@
 
 <div mat-dialog-content class="mt-3">
 
-    <h3 class="m-0 fw-500">#Id1235858</h3>
-    <p class="fw-2">Status</p>
-
+    <h3 class="m-0 "><span class="fw-500">#{{data?.id}}</span></h3>
+    <mat-card style="border:1px solid grey;margin-top:10px;">
+        test
+    </mat-card>
+    <div class="mt-2">
+        <p class="fw-2">Status</p>
+    </div>
     <ng-container>
-        <h3 class="m-0 fw-500">AsifAli Mk</h3>
-        <p class="text-muted m-0">9946959954</p>
-        <p class="text-muted m-0">kalathil house</p>
-        <p class="text-muted m-0">Tanur</p>
-        <p class="text-muted m-0">Payment </p>
+        <h3 class="m-0"><span class="fw-500">{{data?.user?.name}}</span></h3>
+        <p class="text-muted m-0">{{data?.user?.mobile}}</p>
+        <p class="text-muted m-0">{{data?.user?.location}}</p>
     </ng-container>
+    <div class="mt-2 mb-1">
+        <p class="m-0">Payment </p>
+    </div>
     <mat-divider></mat-divider>
 
     <div class="mt-2">
-        <h3 class="m-0">Items</h3>
+        <h3 class="m-0"><span class="fw-500">Items</span></h3>
 
         <div class="mt-2" fxLayout="row" fxLayoutAlign="space-between center">
 
             <div>
-                <span class="text-muted">Qty</span>
+                <span>Qty</span>
                 <div fxLayout="column">
                     <span>1</span>
                     <span>2</span>
