@@ -111,7 +111,7 @@
 
 						<!-- date {{ row[column.key] | date: 'dd/MM/yyyy'}}-->
 						<div *ngSwitchCase="'date'">
-							{{ row[column.key]}}
+							{{ row[column.key] | timeAgo}}
 						</div>
 
 						<!-- image -->

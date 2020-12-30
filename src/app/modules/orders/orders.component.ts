@@ -23,18 +23,12 @@ export class OrdersComponent implements OnInit {
       name: "User",
       key: "user",
       type: "group",
-      cols: [{ "key": "name", "icon": "person" },{ "key": "mobile", "icon": "smartphone" },{ "key": "schedule", "icon": "schedule" }]
+      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, { "key": "schedule", "icon": "schedule" }]
     },
     {
-      name: "Location",
+      name: "Time",
       key: "created_at",
-      type: "single",
-      cols: []
-    },
-    {
-      name: "Total",
-      key: "total",
-      type: "single",
+      type: "date",
       cols: []
     },
     {
@@ -113,6 +107,9 @@ export class OrdersComponent implements OnInit {
     })
   }
 
+
+
+
 }
 
 
@@ -127,18 +124,33 @@ export class OrderDetailsDialog {
     public dialogRef: MatDialogRef<OrderDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
-    console.log(this.data)
   }
 
+  displayedColumns: string[] = ['item', 'cost'];
+  transactions: Transaction[] = [
+    { item: 'chicken 65', cost: 420 },
+    { item: 'cococola', cost: 95 },
+    { item: 'burger', cost: 20 }
+  ];
 
   onYesClick(str: any): void {
     this.dialogRef.close(true);
-    console.log(this.data)
   }
 
-  onNoClick() {
+  onNoClick(): void {
     this.dialogRef.close(false);
   }
 
+  printPage() {
+    window.print();
+  }
+
+  getTotalCost() {
+    return this.transactions.map(t => t.cost).reduce((acc, value) => acc + value, 0);
+  }
 }
 
+export interface Transaction {
+  item: string;
+  cost: number;
+}

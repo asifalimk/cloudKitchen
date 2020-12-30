@@ -22,9 +22,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
+import { TimeAgoPipe } from './time-ago.pipe';
 
 @NgModule({
-  declarations: [TableWidgetComponent],
+  declarations: [TableWidgetComponent, TimeAgoPipe],
   imports: [
     CommonModule,
     FormsModule,

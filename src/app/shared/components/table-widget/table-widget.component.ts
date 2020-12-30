@@ -46,8 +46,10 @@ export class TableWidgetComponent implements OnInit {
 	public isOneSelected = true;
 
 	ngOnInit(): void {
+		
+	}
 
-	
+	ngOnChanges(){
 		this.initTableData();
 	}
 

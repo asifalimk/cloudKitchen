@@ -20,9 +20,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
   ],
   imports: [
     BrowserAnimationsModule,
-    RouterModule.forRoot(AppRoutes,{
-      useHash: true
-    }),
+    RouterModule.forRoot(AppRoutes),
     NavbarModule,
     HttpClientModule,
     ToastrModule.forRoot(),

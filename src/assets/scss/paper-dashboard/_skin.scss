@@ -39,3 +39,6 @@ $material-custom-theme: mat-light-theme($dp-app-primary, $dp-app-accent, $dp-app
 
 @include angular-material-theme($material-custom-theme);
 
+body{
+  margin: 0;
+}
