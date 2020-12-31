@@ -19,7 +19,11 @@ export class AuthService {
   private window = window;
 
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+
+    // If the window storage contains token, set in the in memory and change the login state
+    this.token = this.getWebToken();
+   }
 
   /**
    * Get the user profile information
@@ -35,7 +39,8 @@ export class AuthService {
  * @returns boolean
  */
   isAdmin(): boolean {
-    return !!this.token;
+    console.log(this.token,this.user)
+    return !!this.token &&  this.token.roles == 'Admin';
   }
 
 
@@ -49,7 +54,7 @@ export class AuthService {
     return this.httpClient.post<any>(`${environment.url}/authenticate`, req)
       .pipe(
         map((data: any) => {
-          console.log(data.data)
+          console.log(data)
           // save the token in the web storage
           this.saveWebToken(data.message.token);
           // also store the token in the in memory
@@ -116,12 +121,23 @@ export class AuthService {
   }
 
   /**
- * Observable for the login status
- * This will return the boolean on subscription based on the login status
- * @returns Observable
- */
+   * Observable for the login status
+   * This will return the boolean on subscription based on the login status
+   * @returns Observable
+   */
   onChange(): Observable<boolean> {
+
+    console.log(this.authSubject.asObservable())
     return this.authSubject.asObservable();
+  }
+
+
+    /**
+   * Check the user is authenticated or not
+   * @returns boolean
+   */
+  isAuthenticated(): boolean {
+    return !!this.token;
   }
 
 }
@@ -129,17 +145,30 @@ export class AuthService {
 // TODO: CHANGE THE MODEL AS THE RESPONSE 
 interface LoginRequest {
   name: string;
-  code:string
+  code: string
   mobile: string;
 }
 
 // TODO: CHANGE THE MODEL AS THE RESPONSE 
+
+
 export interface Token {
+  id: number;
   name: string;
+  email: string;
+  dob?: any;
+  country_code: string;
+  mobile: string;
   role: string;
-  email:string;
-  avathar: string;
-  location: string;
+  avatar: any;
+  location: any;
+  device_id: any;
+  content: any;
+  remember_token: any;
+  token_expires_at: any;
+  status: number;
+  created_at: string;
+  updated_at: string;
 }
 
 // TODO: CHANGE THE MODEL AS THE RESPONSE 

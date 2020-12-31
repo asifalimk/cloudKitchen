@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'app/auth/auth.service';
 
 
 @Component({
@@ -8,10 +10,50 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
 
-  routes=ROUTES;
+  public isAuthenticated: boolean;
+  public sidenavMenuItems: Array<any>;
+  constructor(private auth: AuthService, public router: Router){
+
+  }
+
 
   ngOnInit() { 
-    
+    this.auth.onChange().subscribe(status => {
+      this.reactToAuthChange(status);
+    });
+
+    this.isAuthenticated = this.auth.isAuthenticated();
+
+    console.log(this.isAuthenticated)
+
+    if (this.isAuthenticated) {
+      this.updateMenuItems();
+    }
+  }
+
+
+  private reactToAuthChange(status: boolean) {
+    this.isAuthenticated = status;
+
+    if (this.isAuthenticated) {
+      this.router.navigate(['/dashboard']);
+    }
+    else{
+      this.router.navigate(['/sign-in']);
+    }
+  }
+
+
+  private updateMenuItems() {
+    if (this.isAuthenticated) {
+      this.sidenavMenuItems = this.auth.isAdmin() ? adminMenuItems : staffMenuItems;
+    }
+  }
+
+
+  logout() {
+    // Logout
+    this.auth.logout();
   }
 }
 
@@ -20,17 +62,20 @@ export interface RouteInfo {
   title: string;
   icon: string;
   type: string;
-  subMenus:Array<any>;
 }
 
-export const ROUTES: RouteInfo[] = [
-  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', type: 'menu',subMenus:[] },
-  { path: '/masters', title: 'Masters', icon: 'support', type: '' ,subMenus:[]},
-  { path: '/icons', title: 'Products', icon: 'category', type: '',subMenus:[] },
-  { path: '/orders', title: 'Orders', icon: 'wysiwyg', type: 'nested-menu',subMenus:[{title:"Order",link:"/orders"}] },
-  { path: '/notifications', title: 'Delivery', icon: 'local_shipping', type: '',subMenus:[] },
-  { path: '/user', title: 'Reports', icon: 'article', type: '',subMenus:[] },
-  { path: '/table', title: 'Reviews', icon: 'rate_review', type: 'nested-menu',subMenus:[] },
-  { path: '/config', title: 'Config', icon: 'settings', type: '',subMenus:[] },
-  { path: '/typography', title: 'Typography', icon: 'edit', type: '',subMenus:[] },
+export const adminMenuItems: RouteInfo[] = [
+  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', type: 'menu' },
+  { path: '/masters', title: 'Masters', icon: 'support', type: '' },
+  { path: '/icons', title: 'Products', icon: 'category', type: '' },
+  { path: '/orders', title: 'Orders', icon: 'wysiwyg', type: 'nested-menu' },
+  { path: '/notifications', title: 'Delivery', icon: 'local_shipping', type: '' },
+  { path: '/user', title: 'Reports', icon: 'article', type: '' },
+  { path: '/table', title: 'Reviews', icon: 'rate_review', type: 'nested-menu' },
+  { path: '/config', title: 'Config', icon: 'settings', type: '' },
+  { path: '/typography', title: 'Typography', icon: 'edit', type: '' },
 ];
+
+export const staffMenuItems = [
+  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', type: 'menu' },
+]

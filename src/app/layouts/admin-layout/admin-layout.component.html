@@ -9,7 +9,7 @@
         </div>
 
         <mat-nav-list dense fxLayout="column" fxLayoutGap="10px" class="p-2">
-            <ng-container *ngFor="let route of routes">
+            <ng-container *ngFor="let route of sidenavMenuItems">
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
                     <mat-icon mat-list-icon color="accent">{{route?.icon}}</mat-icon>
                     <a mat-list-item [routerLink]="route.path"> {{route?.title}} </a>
