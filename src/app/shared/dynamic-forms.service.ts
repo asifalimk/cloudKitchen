@@ -21,11 +21,32 @@ export class DynamicFormsService {
         )
       );
   }
+
+  getCouponTypesForm(): Observable<CouponTypesForm> {
+    return this.httpClient.get<CouponTypesForm>(`${environment.url}/dynamicForm/category`)
+      .pipe(
+        tap((res) => { },
+          (error: any) => throwError(error)
+        )
+      );
+  }
 }
 
 
 
+
+
 export interface ProductCategoriesForm {
+  header: string;
+  fields: Fields;
+}
+
+export interface CouponTypesForm {
+  header: string;
+  fields: Fields;
+}
+
+export interface CoupensForm {
   header: string;
   fields: Fields;
 }
