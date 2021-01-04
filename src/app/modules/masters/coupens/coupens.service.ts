@@ -27,8 +27,9 @@ export class CoupensService {
     /**
    * fetch list of product categories
    */
-  addCoupons(req): Observable<Coupens> {
-    return this.httpClient.post<Coupens>(`${environment.url}/post`,req)
+  addCoupons(req): Observable<boolean> {
+    
+    return this.httpClient.post<any>(`${environment.url}/post`,req)
       .pipe(
         tap((data) => { },
           (error: any) => throwError(error)

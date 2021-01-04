@@ -13,8 +13,8 @@ export class DynamicFormsService {
   /**
    * returns create product categories form json structure
    */
-  getProductCategoriesForm(): Observable<ProductCategoriesForm> {
-    return this.httpClient.get<ProductCategoriesForm>(`${environment.url}/dynamicForm/category`)
+  getProductCategoriesForm(arg): Observable<ProductCategoriesForm> {
+    return this.httpClient.get<ProductCategoriesForm>(`${environment.url}/dynamicForm/`+arg)
       .pipe(
         tap((res) => { },
           (error: any) => throwError(error)
@@ -22,14 +22,15 @@ export class DynamicFormsService {
       );
   }
 
-  getCouponTypesForm(): Observable<CouponTypesForm> {
-    return this.httpClient.get<CouponTypesForm>(`${environment.url}/dynamicForm/category`)
+  getParent(): Observable<ProductCategoriesForm> {
+    return this.httpClient.get<ProductCategoriesForm>(`${environment.url}/parentCategories`)
       .pipe(
         tap((res) => { },
           (error: any) => throwError(error)
         )
       );
   }
+
 }
 
 

@@ -7,8 +7,12 @@ const routes: Routes = [{
   path: '',
   component: MastersComponent, children: [
      { path: '', redirectTo: 'product-categories', pathMatch: 'full' },
-     { path: 'product-categories', loadChildren: () => import('./product-categories/product-categories.module').then(m => m.ProductCategoriesModule) }
-  ]
+     { path: 'product-categories', loadChildren: () => import('./product-categories/product-categories.module').then(m => m.ProductCategoriesModule) },
+    //  { path: '', redirectTo: 'coupon-types', pathMatch: 'fulll'},
+    //  {path: '',component: ViewCouponTypesComponent}
+     { path: 'coupon-types', loadChildren: () => import('./coupon-types/coupon-types.module').then(m => m.CouponTypesModule) },
+     { path: 'coupens', loadChildren: () => import('./coupens/coupens.module').then(m => m.CoupensModule) }
+    ]
 }]
 
 @NgModule({
