@@ -1,0 +1,33 @@
+<ng-container>
+
+    <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+        <ng-container *ngFor="let item of formStructure?.fields | keyvalue">
+
+            <ng-container [ngSwitch]="field.type">
+
+                <ng-container *ngSwitchCase="'textbox'">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'textArea'">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'selectBox'">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'checkBox'">
+
+                </ng-container>
+
+                <ng-container *ngSwitchCase="'image'">
+
+                </ng-container>
+
+            </ng-container>
+
+        </ng-container>
+    </form>
+
+</ng-container>

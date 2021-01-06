@@ -83,6 +83,7 @@ export class CreateCategoriesComponent implements OnInit {
   getFormStructure(): void {
     this.dynamicFormsService.getProductCategoriesForm('category').subscribe((res: ProductCategoriesForm) => {
       this.formStructure = res;
+      console.log(res)
     })
   }
 

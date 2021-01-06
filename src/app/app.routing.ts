@@ -5,7 +5,7 @@ import { LayoutResolverService } from './modules/layout.resolver.service';
 export const AppRoutes: Routes = [
   { path: 'sign-in', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule) },
   {
-    path: '',
+    path: 'admin',
     component: AdminLayoutComponent,
     children: [
       {
@@ -15,5 +15,9 @@ export const AppRoutes: Routes = [
         },
         loadChildren: () => import('./modules/layout.module').then(m => m.AdminLayoutModule)
       }]
+  },
+  {
+    path: '',
+    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) 
   }
 ]

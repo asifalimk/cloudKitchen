@@ -12,12 +12,12 @@ export class AdminLayoutComponent implements OnInit {
 
   public isAuthenticated: boolean;
   public sidenavMenuItems: Array<any>;
-  constructor(private auth: AuthService, public router: Router){
+  constructor(private auth: AuthService, public router: Router) {
 
   }
 
 
-  ngOnInit() { 
+  ngOnInit() {
     // this.auth.onChange().subscribe(status => {
     //   this.reactToAuthChange(status);
     // });
@@ -26,8 +26,8 @@ export class AdminLayoutComponent implements OnInit {
 
     if (this.isAuthenticated) {
       this.updateMenuItems();
-      this.router.navigate(['/dashboard']);
-    }else{
+      this.router.navigate(['admin/dashboard']);
+    } else {
       this.router.navigate(['/sign-in']);
     }
   }
@@ -39,7 +39,7 @@ export class AdminLayoutComponent implements OnInit {
     if (this.isAuthenticated) {
       this.router.navigate(['/dashboard']);
     }
-    else{
+    else {
       this.router.navigate(['/sign-in']);
     }
   }
@@ -66,15 +66,12 @@ export interface RouteInfo {
 }
 
 export const adminMenuItems: RouteInfo[] = [
-  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', type: 'menu' },
-  { path: '/masters', title: 'Masters', icon: 'support', type: '' },
-  { path: '/icons', title: 'Products', icon: 'category', type: '' },
-  { path: '/orders', title: 'Orders', icon: 'wysiwyg', type: 'nested-menu' },
-  { path: '/notifications', title: 'Delivery', icon: 'local_shipping', type: '' },
-  { path: '/user', title: 'Reports', icon: 'article', type: '' },
-  { path: '/table', title: 'Reviews', icon: 'rate_review', type: 'nested-menu' },
-  { path: '/config', title: 'Config', icon: 'settings', type: '' },
-  { path: '/typography', title: 'Typography', icon: 'edit', type: '' },
+  { path: '/admin/dashboard', title: 'Dashboard', icon: 'dashboard', type: 'menu' },
+  { path: '/admin/masters', title: 'Masters', icon: 'support', type: '' },
+  { path: '/admin/orders', title: 'Orders', icon: 'wysiwyg', type: 'nested-menu' },
+  { path: '/admin/notifications', title: 'Delivery', icon: 'local_shipping', type: '' },
+  { path: '/admin/user', title: 'Reports', icon: 'article', type: '' },
+  { path: '/admin/config', title: 'Config', icon: 'settings', type: '' },
 ];
 
 export const staffMenuItems = [

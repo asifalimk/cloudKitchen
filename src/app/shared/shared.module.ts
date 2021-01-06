@@ -24,9 +24,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import { TimeAgoPipe } from './time-ago.pipe';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { FormWidgetComponent } from './components/form-widget/form-widget.component';
 
 @NgModule({
-  declarations: [TableWidgetComponent, TimeAgoPipe],
+  declarations: [TableWidgetComponent, TimeAgoPipe, FormWidgetComponent],
   imports: [
     CommonModule,
     FormsModule,
