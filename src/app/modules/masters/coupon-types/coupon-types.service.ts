@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductCategoriesService {
+export class CouponTypesService {
 
   constructor(private httpClient: HttpClient) { }
 
@@ -15,8 +15,8 @@ export class ProductCategoriesService {
   /**
    * fetch list of product categories
    */
-  fetchProductCategories(): Observable<ProductCategories> {
-    return this.httpClient.get<ProductCategories>(`${environment.url}/categories`)
+  fetchCouponTypes(): Observable<CouponTypes> {
+    return this.httpClient.get<CouponTypes>(`${environment.url}/couponTypes`)
       .pipe(
         tap((data) => { },
           (error: any) => throwError(error)
@@ -27,9 +27,8 @@ export class ProductCategoriesService {
     /**
    * fetch list of product categories
    */
-  addProductCategories(req): Observable<ProductCategories> {
-    
-    return this.httpClient.post<ProductCategories>(`${environment.url}/post`,req)
+  addCouponTypes(req): Observable<CouponTypes> {
+    return this.httpClient.post<CouponTypes>(`${environment.url}/post`,req)
       .pipe(
         tap((data) => { },
           (error: any) => throwError(error)
@@ -41,7 +40,7 @@ export class ProductCategoriesService {
 }
 
 
-export interface ProductCategories {
+export interface CouponTypes {
   message: Message[];
   success: boolean;
 }
