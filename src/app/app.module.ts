@@ -4,14 +4,15 @@ import { RouterModule } from '@angular/router';
 import { ToastrModule } from "ngx-toastr";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FooterModule } from './shared/footer/footer.module';
-import { NavbarModule} from './shared/navbar/navbar.module';
+import { NavbarModule } from './shared/navbar/navbar.module';
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AdminLayoutComponent } from './modules/layout.component';
 import { SharedModule } from "./shared/shared.module";
-import { AppInterceptorInterceptor } from "./utils/app-interceptor";
+import { AppInterceptor } from "./utils/app-interceptor";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { AuthModule } from "./auth/auth.module";
 
 @NgModule({
   declarations: [
@@ -27,9 +28,10 @@ import { NgxSpinnerModule } from "ngx-spinner";
     FooterModule,
     ReactiveFormsModule,
     SharedModule,
+    AuthModule,
     NgxSpinnerModule
   ],
-  providers: [ { provide: HTTP_INTERCEPTORS, useClass: AppInterceptorInterceptor, multi: true },],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,6 +7,7 @@
 .logo-image-small{
     height: 50px;
 }
+
 .mat-sidenav {
     width: 250px;
     position: fixed;
@@ -14,4 +15,5 @@
 
   .mat-sidenav-container{
       background-color: #f4f3ef !important;
+      min-height:100vh;
   }

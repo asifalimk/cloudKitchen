@@ -40,6 +40,7 @@ export class CreateCoupensComponent implements OnInit {
   getFormStructure(): void {
     this.dynamicFormsService.getCouponTypesForm().subscribe((res: CoupensForm) => {
       this.formStructure = res;
+      console.log(res)
     })
   }
 
@@ -53,6 +54,8 @@ export class CreateCoupensComponent implements OnInit {
       "post": "coupons",
       "content": this.createForm.value
     }
+
+    console.log(req)
     this.coupensService.addCoupons(req).subscribe(res => {
       console.log(res)
     })

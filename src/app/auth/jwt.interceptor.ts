@@ -40,7 +40,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
 
   getJWT(): string {
-    return this.window.localStorage.getItem("token");
+    return this.window.localStorage.getItem("TOKEN");
   }
 
 }

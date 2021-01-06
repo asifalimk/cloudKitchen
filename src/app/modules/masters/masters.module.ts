@@ -7,7 +7,9 @@ const routes: Routes = [{
   path: '',
   component: MastersComponent, children: [
      { path: '', redirectTo: 'product-categories', pathMatch: 'full' },
-     { path: 'product-categories', loadChildren: () => import('./product-categories/product-categories.module').then(m => m.ProductCategoriesModule) }
+     { path: 'product-categories', loadChildren: () => import('./product-categories/product-categories.module').then(m => m.ProductCategoriesModule) },
+     { path: 'coupons', loadChildren: () => import('./coupens/coupens.module').then(m => m.CoupensModule) }
+
   ]
 }]
 

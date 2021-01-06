@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable, Subject, throwError } from 'rxjs';
@@ -23,7 +23,7 @@ export class AuthService {
 
     // If the window storage contains token, set in the in memory and change the login state
     this.token = this.getWebToken();
-   }
+  }
 
   /**
    * Get the user profile information
@@ -39,8 +39,7 @@ export class AuthService {
  * @returns boolean
  */
   isAdmin(): boolean {
-    console.log(this.token,this.user)
-    return !!this.token &&  this.token.roles == 'Admin';
+    return !!this.token && this.user.role == 'Admin';
   }
 
 
@@ -54,7 +53,6 @@ export class AuthService {
     return this.httpClient.post<any>(`${environment.url}/authenticate`, req)
       .pipe(
         map((data: any) => {
-          console.log(data)
           // save the token in the web storage
           this.saveWebToken(data.message.token);
           // also store the token in the in memory
@@ -76,7 +74,7 @@ export class AuthService {
   private saveWebToken(token: any): boolean {
     // TODO: ENCRYPT AND SAVE
     if (!!token) {
-      this.window.localStorage.setItem(WEB_TOKEN_KEY, JSON.stringify(token));
+      this.window.localStorage.setItem(WEB_TOKEN_KEY, token);
       return true;
     }
     return false;
@@ -92,6 +90,7 @@ export class AuthService {
   /**
     * Logout and clear the in memory storage of user
     */
+   //TODO Change or remove logout api call and add subject behaviour without window reloading
   logout(): Observable<any> {
     // clear the token from the web storage
     this.clearWebToken();
@@ -99,6 +98,7 @@ export class AuthService {
     this.token = null;
     this.user = null;
     this.updateAuthStatus();
+    window.location.reload();
     return this.httpClient.post<any>('api/logout', {});
   }
 
@@ -106,10 +106,10 @@ export class AuthService {
   * Return the token from the web storage
   * @returns Token
   */
-  private getWebToken(): Token {
+  private getWebToken() {
     const tokenStr = this.window.localStorage.getItem(WEB_TOKEN_KEY);
     if (tokenStr != null)
-      return JSON.parse(tokenStr) as Token;
+      return tokenStr;
     else return null;
   }
 
@@ -126,19 +126,40 @@ export class AuthService {
    * @returns Observable
    */
   onChange(): Observable<boolean> {
-
-    console.log(this.authSubject.asObservable())
     return this.authSubject.asObservable();
   }
 
 
-    /**
-   * Check the user is authenticated or not
-   * @returns boolean
-   */
+  /**
+ * Check the user is authenticated or not
+ * @returns boolean
+ */
   isAuthenticated(): boolean {
     return !!this.token;
   }
+
+
+  /**
+   * Fetching the user profile
+   * @returns Observable
+   */
+  fetchProfile(): Observable<boolean> {
+    return this.httpClient.post<any>(`${environment.url}/userDetails`, {})
+      .pipe(
+        tap((data) => {
+          if (data && data.success) {
+            this.user = data.success;
+            return true
+          } else {
+            return false;
+          }
+
+        },
+          (error: any) => throwError(error)
+        )
+      );
+  }
+
 
 }
 

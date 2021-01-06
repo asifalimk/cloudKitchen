@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
-export class AppInterceptorInterceptor implements HttpInterceptor {
+export class AppInterceptor implements HttpInterceptor {
 
   constructor(private spinner: NgxSpinnerService) { }
 

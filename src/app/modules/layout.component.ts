@@ -5,8 +5,8 @@ import { AuthService } from 'app/auth/auth.service';
 
 @Component({
   selector: 'app-admin-layout',
-  templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.scss']
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
 export class AdminLayoutComponent implements OnInit {
 
@@ -18,16 +18,17 @@ export class AdminLayoutComponent implements OnInit {
 
 
   ngOnInit() { 
-    this.auth.onChange().subscribe(status => {
-      this.reactToAuthChange(status);
-    });
+    // this.auth.onChange().subscribe(status => {
+    //   this.reactToAuthChange(status);
+    // });
 
     this.isAuthenticated = this.auth.isAuthenticated();
 
-    console.log(this.isAuthenticated)
-
     if (this.isAuthenticated) {
       this.updateMenuItems();
+      this.router.navigate(['/dashboard']);
+    }else{
+      this.router.navigate(['/sign-in']);
     }
   }
 
