@@ -17,24 +17,6 @@
             </ng-container>
         </mat-nav-list>
 
-        <!-- <mat-accordion multi class="p-1">
-            <ng-container *ngFor="let route of routes">
-                <mat-expansion-panel expandedHeight="50px" collapsedHeight="50px" class="mat-elevation-z0">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-                            <mat-icon color="accent">{{route?.icon}}</mat-icon>
-                            <span>{{route?.title}}</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item *ngFor="let sub of route.subMenus" [routerLink]="sub.link"> {{ sub?.title }}
-                        </a>
-                    </mat-nav-list>
-        
-                </mat-expansion-panel>
-            </ng-container>
-        </mat-accordion> -->
-
     </mat-sidenav>
     <mat-sidenav-content>
         <navbar-cmp></navbar-cmp>

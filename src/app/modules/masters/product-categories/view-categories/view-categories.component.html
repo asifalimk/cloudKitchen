@@ -1,83 +1,9 @@
-<div class="row">
-
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="card-title"> Categories</h4>
-      </div>
-      <a routerLink="/masters/product-categories/create">
-        <button type="button" class="btn btn-primary btn-round pull-left">Add New Category</button>
-      </a>
-      <!-- <div class="row"> -->
-      <!-- <div class="update ml-auto mr-auto"> -->
-      <!-- <button type="button" class="btn btn-primary btn-round">Add New Category</button> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <div class="card-body">
-        <!-- <div class="table-responsive"> -->
-        <table class="table">
-          <thead class=" text-primary">
-            <th>
-              #
-            </th>
-            <th>
-              Image
-            </th>
-            <th>
-              Parent Category
-            </th>
-            <th>
-              Title
-            </th>
-            <th>
-              Description
-            </th>
-
-            <th>
-              Status
-            </th>
-            <th>
-              Action
-            </th>
-          </thead>
-          <tbody>
-            <ng-container *ngFor="let category of productCategories?.message; let i = index">
-              <tr>
-                <td>
-                  {{i+1}}
-                </td>
-                <td>
-                  <img width="50" height="50"
-                    src="https://phplaravel-401379-1623642.cloudwaysapps.com/storage/media/category/{{category.content['image']}}"
-                    alt='image'>
-                </td>
-                <td>
-                  <div *ngIf="category.parent">
-                    {{category.parent.content['title']}}
-                  </div>
-                </td>
-                <td>
-                  {{category.content['title']}}
-                </td>
-                <td>
-                  {{category.content['description']}}
-                </td>
-
-                <td>
-                  <span style="color:rgb(38, 248, 38)" *ngIf="category.content['status'] == 1">●</span>
-                  <span style="color:red" *ngIf="category.content['status'] == 0">●</span>
-                </td>
-                <!-- <td>
-                      <button mat-button><i class="fa fa-edit" (click)="element.edit = true"></i> Edit </button>
-                      <button mat-button><i class="fa fa-delete" *ngIf="element.edit"></i> Delete </button>
-                    </td> -->
-              </tr>
-            </ng-container>
-
-          </tbody>
-        </table>
-        <!-- </div> -->
-      </div>
-    </div>
+<div>
+  <div class="mb-1" fxLayoutAlign="flex-end center">
+    <button routerLink="/admin/masters/product-categories/create" mat-flat-button color="primary">
+      <mat-icon>add</mat-icon> Add New Category
+    </button>
   </div>
+  <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData" (rowClicked)="rowClicked($event)">
+  </app-table-widget>
 </div>

@@ -15,10 +15,10 @@ export class LoginComponent implements OnInit {
   hide = false;
   private window = window;
 
-  constructor(private authService: AuthService,public router: Router,public snackBar: MatSnackBar) {
+  constructor(private authService: AuthService, public router: Router, public snackBar: MatSnackBar) {
 
     if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/admin/dashboard']);
     }
     console.log(this.authService.isAuthenticated())
     this.loginForm = new FormGroup({
@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value).subscribe(res => {
         console.log(res)
         if (res == true) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/admin/dashboard']);
         }
-      },(error)=>{
+      }, (error) => {
         this.snackBar.open('Invalid Username or Password', '×', { panelClass: 'error', verticalPosition: 'top', duration: 3000 });
         return null;
       })

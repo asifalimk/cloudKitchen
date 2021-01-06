@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MastersComponent } from './masters.component';
 import { RouterModule, Routes } from '@angular/router';
+import { SharedModule } from 'app/shared/shared.module';
 
 const routes: Routes = [{
   path: '',
@@ -19,7 +20,8 @@ const routes: Routes = [{
   declarations: [MastersComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    SharedModule
   ]
 })
 export class MastersModule { }
