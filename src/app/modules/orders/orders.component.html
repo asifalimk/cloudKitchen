@@ -39,7 +39,7 @@
     </div>
 
     <div class="w-100">
-        <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData" (rowClicked)="rowClicked($event)">
+        <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData" (matMenuClicked) ="menuClicked($event)" (rowClicked)="rowClicked($event)">
         </app-table-widget>
     </div>
 

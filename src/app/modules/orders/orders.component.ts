@@ -12,6 +12,7 @@ export class OrdersComponent implements OnInit {
   constructor(public dialog: MatDialog, private ordersService: OrdersService) { }
 
   public tableData: any;
+  public orderDetails: any;
   public columnStructure: any = [
     {
       name: "#",
@@ -86,17 +87,46 @@ export class OrdersComponent implements OnInit {
     this.openDialog(data);
   }
 
-  openDialog(data): void {
-    const dialogRef = this.dialog.open(OrderDetailsDialog, {
-      width: '300px',
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
-    });
+  menuClicked(data: any) {
+    this.changeStatus(data);
   }
 
+  openDialog(data): void {
+    this.fetchOrderItemDetails(data.id);
+    
+
+  }
+
+  changeStatus(data): void {
+    if (data.type === "Accept") {
+      const req = {
+        "id": data.data.id,
+        "status": 2
+      };
+  
+      this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+  
+      })
+    }else
+    {
+        console.log('Assign'); 
+    }
+    
+  }
+  fetchOrderItemDetails(id): void {
+    this.ordersService.getOrderDetails(id).subscribe((res: any) => {
+      this.orderDetails = res.success;
+      const dialogRef = this.dialog.open(OrderDetailsDialog, {
+        width: '300px',
+        data: res.success
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        // console.log(result);
+      });
+    })
+    
+  }
   /**
    * fetch list of orders
    */
@@ -123,15 +153,12 @@ export class OrderDetailsDialog {
   constructor(
     public dialogRef: MatDialogRef<OrderDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-
+      console.log(data);
+      this.transactions = data.item;
   }
-
-  displayedColumns: string[] = ['item', 'cost'];
-  transactions: Transaction[] = [
-    { item: 'chicken 65', cost: 420 },
-    { item: 'cococola', cost: 95 },
-    { item: 'burger', cost: 20 }
-  ];
+  openDialogData: any;
+  displayedColumns: string[] = ['item', 'quantity' , 'cost'];
+  transactions: Transaction[];
 
   onYesClick(str: any): void {
     this.dialogRef.close(true);
@@ -148,6 +175,8 @@ export class OrderDetailsDialog {
   getTotalCost() {
     return this.transactions.map(t => t.cost).reduce((acc, value) => acc + value, 0);
   }
+  
+  
 }
 
 export interface Transaction {

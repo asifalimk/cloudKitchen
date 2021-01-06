@@ -150,8 +150,8 @@ export class TableWidgetComponent implements OnInit {
 	/***
 	 * 
 	 */
-	matMenuItemClicked(type: string) {
-		this.matMenuClicked.emit(type);
+	matMenuItemClicked(row: any,type: string) {
+		this.matMenuClicked.emit({data:row,type:type});
 	}
 
 }

@@ -19,7 +19,7 @@
 
         <div class="mt-2" fxLayout="row" fxLayoutGap="5px">
             <p class="fw-500">Status:</p>
-            <span style="color: green;">Delivered</span>
+            <span style="color: green;">{{data?.content?.status}}</span>
         </div>
 
     </div>
@@ -31,7 +31,7 @@
     <ng-container>
         <h3 class="m-0"><span class="fw-500">{{data?.user?.name}}</span></h3>
         <p class="text-muted m-0">{{data?.user?.mobile}}</p>
-        <p class="text-muted m-0">location{{data?.user?.location}}</p>
+        <p class="text-muted m-0">{{data?.user?.content?.location}}</p>
     </ng-container>
     <div class="mt-2 mb-1" fxLayout="row" fxLayoutGap="5px">
         <p class="fw-500">Payment </p>
@@ -44,14 +44,21 @@
             <!-- Item Column -->
             <ng-container matColumnDef="item">
                 <th mat-header-cell *matHeaderCellDef> Item </th>
-                <td mat-cell *matCellDef="let transaction"> {{transaction.item}} </td>
+                <td mat-cell *matCellDef="let transaction"> {{transaction?.product?.product_details?.content?.title}} </td>
                 <td mat-footer-cell *matFooterCellDef> Total </td>
+            </ng-container>
+
+            <!-- Quantity Column -->
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                <td mat-cell *matCellDef="let transaction">{{transaction?.quantity}} </td>
+                <td mat-footer-cell *matFooterCellDef> </td>
             </ng-container>
 
             <!-- Cost Column -->
             <ng-container matColumnDef="cost">
                 <th mat-header-cell *matHeaderCellDef> Cost </th>
-                <td mat-cell *matCellDef="let transaction">{{transaction.cost | currency:'INR'}} </td>
+                <td mat-cell *matCellDef="let transaction">{{transaction?.product?.price | currency:'INR'}} </td>
                 <td mat-footer-cell *matFooterCellDef>{{getTotalCost() | currency:'INR'}} </td>
             </ng-container>
 

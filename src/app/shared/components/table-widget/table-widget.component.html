@@ -151,7 +151,7 @@
 							<mat-menu #menu="matMenu">
 								<ng-container>
 									<button mat-menu-item *ngFor="let menues of column.cols"
-										(click)="matMenuItemClicked(menues)">
+										(click)="matMenuItemClicked(row,menues)">
 										<span>{{menues}}</span>
 									</button>
 								</ng-container>

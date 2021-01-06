@@ -20,4 +20,23 @@ export class OrdersService {
     );
   }
 
+  getOrderDetails(req){
+    return this.httpClient.get<any>(`${environment.url}/orderDetails/`+req)
+    .pipe(
+      tap((res) => { },
+        (error: any) => throwError(error)
+      )
+    );
+  }
+
+  changeOrderStatus(req){
+
+    return this.httpClient.post<any>(`${environment.url}/changeOrderStatus`,req)
+      .pipe(
+        tap((req) => { },
+          (error: any) => throwError(error)
+        )
+      );
+  }
+
 }
