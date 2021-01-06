@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { AdminLayoutComponent } from './modules/layout.component';
 import { LayoutResolverService } from './modules/layout.resolver.service';
 
 export const AppRoutes: Routes = [
@@ -13,6 +12,6 @@ export const AppRoutes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) 
+    loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
   }
 ]
