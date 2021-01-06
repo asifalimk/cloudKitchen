@@ -11,7 +11,7 @@ import { SharedModule } from 'app/shared/shared.module';
     SharedModule
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
   ]
 })
 
