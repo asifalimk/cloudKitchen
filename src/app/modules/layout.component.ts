@@ -26,10 +26,7 @@ export class AdminLayoutComponent implements OnInit {
 
     if (this.isAuthenticated) {
       this.updateMenuItems();
-      this.router.navigate(['admin/dashboard']);
-    } else {
-      this.router.navigate(['/sign-in']);
-    }
+    } 
   }
 
 
@@ -51,9 +48,8 @@ export class AdminLayoutComponent implements OnInit {
     }
   }
 
-
+  // Logout
   logout() {
-    // Logout
     this.auth.logout();
   }
 }

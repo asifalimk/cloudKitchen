@@ -6,15 +6,10 @@ export const AppRoutes: Routes = [
   { path: 'sign-in', loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule) },
   {
     path: 'admin',
-    component: AdminLayoutComponent,
-    children: [
-      {
-        path: '',
-        resolve: {
-          profile: LayoutResolverService
-        },
-        loadChildren: () => import('./modules/layout.module').then(m => m.AdminLayoutModule)
-      }]
+    resolve: {
+      profile: LayoutResolverService
+    },
+    loadChildren: () => import('./modules/layout.module').then(m => m.AdminLayoutModule)
   },
   {
     path: '',
