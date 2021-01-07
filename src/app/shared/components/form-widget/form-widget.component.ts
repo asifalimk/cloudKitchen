@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-form-widget',
@@ -13,11 +14,14 @@ export class FormWidgetComponent implements OnInit {
 
   @Output() saveButtonClicked = new EventEmitter();
 
-  constructor() { }
+  constructor( protected sanitizer: DomSanitizer) { }
 
   formGroup: FormGroup = new FormGroup({});
 
-
+ /**
+  * 
+  */
+ imageUrlTemp: any;
 
 
   ngOnInit(): void {
@@ -76,11 +80,18 @@ export class FormWidgetComponent implements OnInit {
   onFileChange(event) {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      this.formGroup.get('image').setValue(file);
+      const fileName = file['name'];
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (_event) => {
+        this.imageUrlTemp = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+        const localUrl = _event.target.result;
+        this.formGroup.get('image').setValue(file);
+      }
     }
-    }
-
   }
+
+}
 
 
 export interface formType {
