@@ -108,9 +108,12 @@ export class AuthService {
   */
   private getWebToken() {
     const tokenStr = this.window.localStorage.getItem(WEB_TOKEN_KEY);
-    if (tokenStr != null)
+    if (tokenStr != null) {
       return tokenStr;
-    else return null;
+    }
+    else {
+      return null;
+    }
   }
 
   /**
@@ -150,7 +153,8 @@ export class AuthService {
           if (data && data.success) {
             this.user = data.success;
             return true
-          } else {
+          }
+          else {
             return false;
           }
 
@@ -163,14 +167,14 @@ export class AuthService {
 
 }
 
-// TODO: CHANGE THE MODEL AS THE RESPONSE 
+// TODO: CHANGE THE MODEL  
 interface LoginRequest {
   name: string;
   code: string
   mobile: string;
 }
 
-// TODO: CHANGE THE MODEL AS THE RESPONSE 
+// TODO: CHANGE THE MODEL
 
 
 export interface Token {
@@ -192,7 +196,7 @@ export interface Token {
   updated_at: string;
 }
 
-// TODO: CHANGE THE MODEL AS THE RESPONSE 
+// TODO: CHANGE THE MODEL 
 export interface User {
   firstName?: string;
   lastName?: string;

@@ -23,10 +23,10 @@ export class CreateCategoriesComponent implements OnInit {
    */
   createForm: FormGroup;
 
-  createFormStructure:any;
+  createFormStructure: any;
 
 
-  constructor(private http: HttpClient, private dynamicFormsService: DynamicFormsService, private productCategoriesService: ProductCategoriesService,private _snackBar: MatSnackBar) {
+  constructor(private http: HttpClient, private dynamicFormsService: DynamicFormsService, private productCategoriesService: ProductCategoriesService, private _snackBar: MatSnackBar) {
     this.createForm = new FormGroup({
       'title': new FormControl(null),
       'description': new FormControl(null),
@@ -77,9 +77,21 @@ export class CreateCategoriesComponent implements OnInit {
         {
           name: "Status",
           formcontrol: "status",
-          type: "checkBox",
+          type: "radio",
+          options: [{
+            id: 1,
+            name: 'Active',
+          },
+          {
+            id: 2,
+            name: 'In Active',
+          }],
           placeholder: "status",
-          validators: []
+          validators: [{
+            name: "required",
+            validator: "required",
+            message: "Status Required"
+          }]
         },
         {
           formcontrol: "parent",
