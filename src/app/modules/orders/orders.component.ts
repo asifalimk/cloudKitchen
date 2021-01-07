@@ -24,7 +24,7 @@ export class OrdersComponent implements OnInit {
       name: "User",
       key: "user",
       type: "group",
-      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, {"key": "location", "icon": "schedule" }]
+      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, { "key": "schedule", "icon": "schedule" }]
     },
     {
       name: "Time",
