@@ -177,7 +177,7 @@
 			<!-- Table Rows -->
 			<mat-row class="table-row" [id]="'table-row-' + row.id " matRipple
 				*cdkRowDef="let row; columns: displayedColumns;"
-				[ngStyle]="{'border-right-color': row?.content?.status =='1'  ? '#fbc658;' : row?.content?.status =='rejected' ? '2': row?.content?.status=='3'  ? '#6bd098':row?.content?.status=='4'  ? '#17a2b8':'#ddd9d9'}"
+				[ngStyle]="{'border-right-color': row?.content?.status =='1'  ? '#fbc658;' : row?.content?.status =='2' ? '#51bcda': row?.content?.status=='3'  ? '#e0e0e0':row?.content?.status=='4'  ? '#d4e157':row?.content?.status=='5'  ? '#6bd098':row?.content?.status=='6'  ? '#e91e63':row?.content?.status=='7'  ? '#ef8157':'#ffff'}"
 				(click)="tableRowClicked(row)"></mat-row>
 
 			<!-- Sub Rows -->
