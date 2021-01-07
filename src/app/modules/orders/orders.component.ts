@@ -24,7 +24,7 @@ export class OrdersComponent implements OnInit {
       name: "User",
       key: "user",
       type: "group",
-      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, { "key": "schedule", "icon": "schedule" }]
+      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, {"key": "location", "icon": "schedule" }]
     },
     {
       name: "Time",
@@ -34,7 +34,8 @@ export class OrdersComponent implements OnInit {
     },
     {
       name: "payment",
-      key: "payment",
+      parent:"payment",
+      key: "name",
       type: "single",
       cols: []
     },
@@ -45,7 +46,7 @@ export class OrdersComponent implements OnInit {
       cols: ["Accept", "Assign"]
     }
   ];
-
+  
   public tableWidgetData: {
     columnStructure: Array<object>,
     tableName: string,
@@ -154,11 +155,13 @@ export class OrderDetailsDialog {
     public dialogRef: MatDialogRef<OrderDetailsDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
       console.log(data);
-      this.transactions = data.item;
+      this.transactions = data.order.item;
+      this.categories = data.categories;
   }
   openDialogData: any;
-  displayedColumns: string[] = ['item', 'quantity' , 'cost'];
+  displayedColumns: string[] = ['item', 'quantity' ];
   transactions: Transaction[];
+  categories: Categories[];
 
   onYesClick(str: any): void {
     this.dialogRef.close(true);
@@ -182,4 +185,8 @@ export class OrderDetailsDialog {
 export interface Transaction {
   item: string;
   cost: number;
+}
+
+export interface Categories {
+  name: string;
 }
