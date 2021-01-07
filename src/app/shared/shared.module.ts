@@ -24,9 +24,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatListModule} from '@angular/material/list';
 import { TimeAgoPipe } from './time-ago.pipe';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { FormWidgetComponent } from './components/form-widget/form-widget.component';
+import { MatSelectModule } from '@angular/material/select';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
-  declarations: [TableWidgetComponent, TimeAgoPipe],
+  declarations: [TableWidgetComponent, TimeAgoPipe, FormWidgetComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -50,7 +54,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatToolbarModule,
     MatExpansionModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatRadioModule
   ],
   exports: [
     FormsModule,
@@ -76,7 +83,11 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatToolbarModule,
     MatExpansionModule,
     MatListModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FormWidgetComponent,
+    MatSelectModule,
+    MatTabsModule,
+    MatRadioModule
   ]
 })
 export class SharedModule { }
