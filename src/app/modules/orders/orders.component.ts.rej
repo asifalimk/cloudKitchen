@@ -1,0 +1,10 @@
+diff a/src/app/modules/orders/orders.component.ts b/src/app/modules/orders/orders.component.ts	(rejected hunks)
+@@ -24,7 +24,7 @@
+       name: "User",
+       key: "user",
+       type: "group",
+-      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, { "key": "schedule", "icon": "schedule" }]
++      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, {"key": "location", "icon": "schedule" }]
+     },
+     {
+       name: "Time",
