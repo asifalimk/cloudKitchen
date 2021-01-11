@@ -39,4 +39,14 @@ export class OrdersService {
       );
   }
 
+  changeOrderPreparedStatus(req){
+
+    return this.httpClient.post<any>(`${environment.url}/changeOrderPreparedStatus`,req)
+      .pipe(
+        tap((req) => { },
+          (error: any) => throwError(error)
+        )
+      );
+  }
+
 }

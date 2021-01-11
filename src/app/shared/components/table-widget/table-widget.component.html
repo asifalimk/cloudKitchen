@@ -82,7 +82,7 @@
 						<div *ngSwitchCase="'button'">
 							<ng-container>
 								<section class="example-section">
-									<button mat-icon-button>
+									<button mat-icon-button (click)="$event.stopPropagation();buttonlicked(row)">
 										<mat-icon>print</mat-icon>
 									</button>
 								</section>
@@ -159,9 +159,9 @@
 
 						</ng-container>
 
-						<ng-container *ngSwitchCase="'button'">
+						<!-- <ng-container *ngSwitchCase="'button'">
 							<button (click)="$event.stopPropagation()" mat-button color="primary">Primary</button>
-						</ng-container>
+						</ng-container> -->
 
 					</ng-container>
 

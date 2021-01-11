@@ -31,6 +31,8 @@ export class TableWidgetComponent implements OnInit {
 
 	@Output() rowClicked = new EventEmitter<any>();
 
+	@Output() buttonClicked = new EventEmitter<any>();
+
 	@Output() matMenuClicked = new EventEmitter<any>();
 
 	public bulkActions: object;
@@ -98,6 +100,11 @@ export class TableWidgetComponent implements OnInit {
 		this.eventRowClicked(row);
 	}
 
+	buttonlicked(row): void {
+
+		this.eventButtonClicked(row);
+	}
+
 	toggleSubItems(row): void {
 		row.expanded = (!row.expanded);
 	}
@@ -106,6 +113,10 @@ export class TableWidgetComponent implements OnInit {
 
 	eventRowClicked(row) {
 		this.rowClicked.emit(row);
+	}
+
+	eventButtonClicked(row) {
+		this.buttonClicked.emit(row);
 	}
 
 
