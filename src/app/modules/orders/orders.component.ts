@@ -16,6 +16,11 @@ export class OrdersComponent implements OnInit {
   public tableData: any;
   public orderDetails: any;
   public items: any;
+  public deliverItems: any;
+  public deliveryBoys: any;
+  public orderStatus: any;
+  public selectionChanged: any;
+  public navDetailsColoumns = ['item', 'quantity','price']
   public navColoumns = ['item', 'quantity', 'status']
   public columnStructure: any = [
     {
@@ -72,6 +77,7 @@ export class OrdersComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.everyThirtySeconds.subscribe(() => {
       this.fetchOrders();
+      this.fetchOrdersStatus()
     });
   }
 
@@ -117,6 +123,28 @@ export class OrdersComponent implements OnInit {
     this.ordersService.changeOrderPreparedStatus(req).subscribe((res: any) => {
     })
   }
+
+  onChangeSelect(event: any) {
+    if(event.value!=null)
+    {
+      // this.selectionChanged = true;
+      this.ordersService.getDeliveryBoyDetails(event.value).subscribe((res: any) => {
+      this.selectionChanged = res.success;
+      })
+    }
+    
+  }
+
+  onOrderUpdate() {
+    console.log(this.selectionChanged);
+    const req = {
+      "id": this.orderDetails.order.id,
+      "deliveryBoy": this.selectionChanged.id
+    };
+
+    this.ordersService.assignDeliveryBoy(req).subscribe((res: any) => {
+    })
+  } 
   close(data: any) {
     this.drawer.close();
   }
@@ -149,7 +177,15 @@ export class OrdersComponent implements OnInit {
       this.orderDetails = res.success;
       this.items = this.orderDetails.order.item;
       console.log(this.orderDetails);
+      if (this.orderDetails.order.content.readyToDeliver) {
+        this.ordersService.getDeliveryBoys().subscribe((res: any) => {
+          this.deliveryBoys = res.success;
+          // this.deliverItems = this.orderDetails.order.items;
+          // console.log(this.deliverItems);
+        })
+      }
     })
+
 
   }
 
@@ -177,7 +213,15 @@ export class OrdersComponent implements OnInit {
     })
   }
 
+  fetchOrdersStatus(): void {
+    this.ordersService.getOrderStatusCount().subscribe((res: any) => {
+      this.orderStatus = res.success;
+    })
+  }
 
+  getTotalCost() {
+    return this.items.map(t => t.cost).reduce((acc, value) => acc + value, 0);
+  }
 
 
 }

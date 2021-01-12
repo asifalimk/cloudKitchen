@@ -28,6 +28,7 @@ import { FormWidgetComponent } from './components/form-widget/form-widget.compon
 import { MatSelectModule } from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [TableWidgetComponent, TimeAgoPipe, FormWidgetComponent],
@@ -57,7 +58,8 @@ import {MatRadioModule} from '@angular/material/radio';
     MatSnackBarModule,
     MatSelectModule,
     MatTabsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatGridListModule
   ],
   exports: [
     FormsModule,
@@ -87,7 +89,8 @@ import {MatRadioModule} from '@angular/material/radio';
     FormWidgetComponent,
     MatSelectModule,
     MatTabsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatGridListModule
   ]
 })
 export class SharedModule { }
