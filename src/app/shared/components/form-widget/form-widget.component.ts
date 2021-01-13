@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { EventEmitter } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -14,15 +14,15 @@ export class FormWidgetComponent implements OnInit {
 
   @Output() saveButtonClicked = new EventEmitter();
 
-  constructor( protected sanitizer: DomSanitizer) { }
+  constructor(protected sanitizer: DomSanitizer) { }
 
   formGroup: FormGroup = new FormGroup({});
 
- /**
-  * 
-  */
- imageUrlTemp: any;
-
+  /**
+   * 
+   */
+  imageUrlTemp: any;
+  @ViewChild('imageUpload')myInputVariable: ElementRef;
 
   ngOnInit(): void {
     this.initiateForm();
@@ -44,6 +44,7 @@ export class FormWidgetComponent implements OnInit {
     if (this.formGroup.valid) {
       this.saveButtonClicked.emit(this.formGroup.value);
       this.formGroup.reset();
+      this.closeImagePreview();
     }
   }
 
@@ -89,6 +90,16 @@ export class FormWidgetComponent implements OnInit {
         this.formGroup.get('image').setValue(file);
       }
     }
+  }
+
+  closeImagePreview() {
+
+    // this.myInputVariable.nativeElement.value = "";
+    if( this.imageUrlTemp){
+      this.imageUrlTemp = null;
+      this.formGroup.get('image').setValue('');
+    }
+    
   }
 
 }

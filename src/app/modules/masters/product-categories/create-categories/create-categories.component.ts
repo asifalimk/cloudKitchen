@@ -21,20 +21,12 @@ export class CreateCategoriesComponent implements OnInit {
   /**
    * create form form group
    */
-  createForm: FormGroup;
+
 
   createFormStructure: any;
 
 
   constructor(private http: HttpClient, private dynamicFormsService: DynamicFormsService, private productCategoriesService: ProductCategoriesService, private _snackBar: MatSnackBar) {
-    this.createForm = new FormGroup({
-      'title': new FormControl(null),
-      'description': new FormControl(null),
-      'status': new FormControl(false),
-      'parent': new FormControl(null),
-      'image': new FormControl(null)
-    });
-
     this.getFormStructure();
     this.getParent();
 
@@ -114,12 +106,7 @@ export class CreateCategoriesComponent implements OnInit {
     })
   }
 
-  // file upload
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
-    this.createForm.get('image').setValue(this.fileToUpload);
-  }
-
+ 
 
 
 

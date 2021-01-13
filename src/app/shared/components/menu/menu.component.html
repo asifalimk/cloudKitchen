@@ -1,0 +1,49 @@
+<mat-nav-list dense>
+    <ng-container [ngTemplateOutlet]="recursiveListMenuItems" [ngTemplateOutletContext]="{$implicit: menus}">
+    </ng-container>
+</mat-nav-list>
+
+
+<ng-template #recursiveListMenuItems let-menus>
+    <ng-container *ngFor="let menuItem of menus" [ngTemplateOutlet]="menuItem.hasSubMenu ? parentMenu : buttonItem"
+        [ngTemplateOutletContext]="{$implicit: menuItem}">
+    </ng-container>
+</ng-template>
+
+<ng-template #buttonItem let-menuItemArg>
+    <mat-list-item [routerLink]="[menuItemArg.routerLink]" fxLayoutAlign="start center" routerLinkActive="horizontal-active-link">
+        <div class="menu-buttonItem" fxLayout="row" fxLayoutGap="10px">
+            <mat-icon color="accent">{{menuItemArg?.icon}}</mat-icon>
+            <h3 class="mat-h3 m-0">{{menuItemArg?.title}}</h3>
+        </div>
+    </mat-list-item>
+</ng-template>
+
+<ng-template #parentMenu let-menuItem>
+    <mat-expansion-panel [class.mat-elevation-z0]="true" dense>
+        <mat-expansion-panel-header fxLayoutGap="10px">
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-icon color="accent">{{menuItem?.icon}}</mat-icon>
+                <h3 class="mat-h3 m-0">{{menuItem?.title}}</h3>
+            </div>
+        </mat-expansion-panel-header>
+        <ng-container [ngTemplateOutlet]="menuItems" [ngTemplateOutletContext]="{$implicit: getSubMenu(menuItem.id)}">
+        </ng-container>
+    </mat-expansion-panel>
+    <mat-menu #submenu="matMenu" [overlapTrigger]="false" class="app-dropdown">
+        <ng-container [ngTemplateOutlet]="menuItems" [ngTemplateOutletContext]="{$implicit: getSubMenu(menuItem.id)}">
+        </ng-container>
+    </mat-menu>
+</ng-template>
+
+<ng-template #menuItems let-menus>
+    <mat-nav-list dense>
+        <a mat-list-item routerLink="#" routerLinkActive="horizontal-active-link" *ngFor="let menuItem of menus"
+            [routerLink]="[menuItem.routerLink]">
+            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-icon color="accent">{{menuItem?.icon}}</mat-icon>
+                <h4 class="mat-h4 m-0">{{menuItem?.title}}</h4>
+            </div>
+        </a>
+    </mat-nav-list>
+</ng-template>

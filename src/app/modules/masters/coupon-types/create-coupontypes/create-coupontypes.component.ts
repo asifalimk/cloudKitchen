@@ -15,23 +15,60 @@ export class CreateCouponTypesComponent implements OnInit {
    * form fileds structure 
    */
   formStructure: CouponTypesForm;
+  createFormStructure: any;
 
-  /**
-   * create form form group
-   */
-  createForm: FormGroup;
+
+
 
   constructor(private http: HttpClient, private dynamicFormsService: DynamicFormsService, private couponTypesService: CouponTypesService) {
-    this.createForm = new FormGroup({
-      'title': new FormControl(null),
-      'description': new FormControl(null),
-      'status': new FormControl(false)
-    });
-
     this.getFormStructure();
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.createFormStructure = [
+      {
+        name: "Title",
+        formcontrol: "title",
+        type: "textbox",
+        placeholder: "title",
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Title Required"
+        }]
+      },
+      {
+        name: "Description",
+        formcontrol: "description",
+        type: "textArea",
+        placeholder: "description",
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Description Required"
+        }]
+      },
+      {
+        name: "Status",
+        formcontrol: "status",
+        type: "radio",
+        options: [{
+          id: 1,
+          name: 'Active',
+        },
+        {
+          id: 2,
+          name: 'In Active',
+        }],
+        placeholder: "status",
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Status Required"
+        }]
+      }
+    ]
+  }
 
   /**
     * @returns void
@@ -46,13 +83,20 @@ export class CreateCouponTypesComponent implements OnInit {
   /**
    * create new category on sobmit
    */
-  onSubmit(): void {
+  onSubmit(data): void {
     const req = {
       "action": "create",
       "post": "coupon_types",
-      "content": this.createForm.value
+      "content":JSON.stringify(data)
     }
-    this.couponTypesService.addCouponTypes(req).subscribe(res => {
+
+    const formData = new FormData();
+    formData.append('action', "create");
+    formData.append('post', "coupon_types");
+    formData.append('content', data);
+    console.log(data,req)
+    this.couponTypesService.addCouponTypes(formData).subscribe(res => {
+      console.log(res)
     })
   }
 }

@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
 	selector: 'app-table-widget',
 	templateUrl: './table-widget.component.html',
-	styleUrls: ['./table-widget.component.css'],
+	styleUrls: ['./table-widget.component.scss'],
 	animations: [
 		trigger('detailExpand', [
 			state('collapsed', style({ height: '0px', minHeight: '0' })),

@@ -315,3 +315,10 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 .text-muted{
   color:#6c757d!important
 }
+
+
+.mat-drawer-container{
+  height: 100vh;
+  overflow: auto;
+  background-color: #f4f3ef !important;
+}

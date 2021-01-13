@@ -22,9 +22,8 @@ export class LoginComponent implements OnInit {
     }
     console.log(this.authService.isAuthenticated())
     this.loginForm = new FormGroup({
-      name: new FormControl("", [Validators.required]),
-      code: new FormControl("", [Validators.required]),
-      mobile: new FormControl("", [Validators.required])
+      username: new FormControl("", [Validators.required]),
+      password: new FormControl("", [Validators.required])
     });
   }
 

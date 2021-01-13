@@ -13,6 +13,47 @@ export class ViewCoupensComponent implements OnInit {
    */
   coupens: Coupens;
 
+  public tableData: any;
+
+  public columnStructure: any = [
+    {
+      name: "Id",
+      key: "id",
+      type: "single",
+      cols: []
+    },
+    {
+      name: "Title",
+      key: "title",
+      parent: "content",
+      type: "single",
+      cols: ["title"]
+    },
+    // {
+    //   name: "Coupen Type",
+    //   key: "coupon_type",
+    //   parent: "description",
+    //   type: "single",
+    //   cols: ["description"]
+    // },
+    {
+      name: "Description",
+      key: "description",
+      parent: "content",
+      type: "single",
+      cols: ["description"]
+    },
+  ];
+
+  public tableWidgetData: {
+    columnStructure: Array<object>,
+    tableName: string,
+    data: any,
+    statusInfoNChanges: object,
+    tableSearch: boolean
+
+  };
+
   constructor(private coupensService: CoupensService) {
     this.getCouponTypes();
   }
@@ -27,9 +68,21 @@ export class ViewCoupensComponent implements OnInit {
    */
   getCouponTypes(): void {
     this.coupensService.fetchCoupons().subscribe((res:Coupens) => {
-      console.log(res);
       this.coupens = res;
+      this.initTableData();
+      
     })
   }
 
+
+  async initTableData() {
+    this.tableWidgetData = {
+      columnStructure: this.columnStructure,
+      data: this.coupens.message,
+      statusInfoNChanges: [],
+      tableSearch: true,
+      tableName: "Coupens",
+    };
+
+  }
 }
