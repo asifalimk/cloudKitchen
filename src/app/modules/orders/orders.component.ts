@@ -19,6 +19,7 @@ export class OrdersComponent implements OnInit {
   public deliverItems: any;
   public deliveryBoys: any;
   public orderStatus: any;
+  public setDeliveryBoy: boolean;
   public selectionChanged: any;
   public navDetailsColoumns = ['item', 'quantity','price']
   public navColoumns = ['item', 'quantity', 'status']
@@ -143,6 +144,8 @@ export class OrdersComponent implements OnInit {
     };
 
     this.ordersService.assignDeliveryBoy(req).subscribe((res: any) => {
+      this.setDeliveryBoy = false;
+      this.drawer.close();
     })
   } 
   close(data: any) {
@@ -170,6 +173,51 @@ export class OrdersComponent implements OnInit {
       console.log('Assign');
     }
 
+  }
+
+  onAccept(): void {
+      const req = {
+        "id": this.orderDetails.order.id,
+        "status": 2
+      };
+
+      this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+        this.drawer.close();
+      })
+    
+
+  }
+
+  onReject(): void {
+      const req = {
+        "id": this.orderDetails.order.id,
+        "status": 7
+      };
+
+      this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+        this.drawer.close();
+      })
+
+  }
+
+  onDispatched(): void {
+    const req = {
+      "id": this.orderDetails.order.id,
+      "status": 5
+    };
+
+    this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+      this.drawer.close();
+    })
+
+}
+
+  onDeliveryDetailsEdit(): void {
+    this.setDeliveryBoy = true;
+    // this.orderDetails.order.content.status = 3;
+    // this.orderDetails.order.content.deliveryBoy = null;
+    // this.drawer.close();
+    // this.drawer.open();
   }
 
   fetchDetails(id): void {
