@@ -50,12 +50,6 @@ export class OrdersComponent implements OnInit {
       cols: []
     },
     {
-      name: "print",
-      key: "print",
-      type: "button",
-      cols: []
-    },
-    {
       name: "Action",
       key: "InformationButton",
       type: "menu",
@@ -101,6 +95,11 @@ export class OrdersComponent implements OnInit {
    * 
    * @param data 
    */
+  print()
+  {
+    this.openDialog(this.orderDetails.order);
+    this.drawer.close();
+  }
   rowClicked(data: any) {
     // this.openDialog(data);
     this.fetchDetails(data.id)
@@ -112,6 +111,7 @@ export class OrdersComponent implements OnInit {
   }
 
   buttonClicked(data: any) {
+    console.log(data);
     this.openDialog(data);
   }
   checkValue(event: any) {

@@ -327,10 +327,13 @@
                                     <tr mat-footer-row *matFooterRowDef="navColoumns"></tr>
                                 </table>
                             </mat-grid-list>
+                            <div fxLayoutAlign="flex-end" >
+                                <button mat-flat-button color="primary"
+                                    (click)="print()">Print</button>
+                            </div>
                         </mat-card-content>
                     </mat-card>
                 </div>
-
             </div>
         </div>
 
