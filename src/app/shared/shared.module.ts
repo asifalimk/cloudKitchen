@@ -28,10 +28,12 @@ import { FormWidgetComponent } from './components/form-widget/form-widget.compon
 import { MatSelectModule } from '@angular/material/select';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatRadioModule} from '@angular/material/radio';
+import { MenuComponent } from './components/menu/menu.component';
+import { RouterModule } from '@angular/router';
 import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
-  declarations: [TableWidgetComponent, TimeAgoPipe, FormWidgetComponent],
+  declarations: [TableWidgetComponent, TimeAgoPipe, FormWidgetComponent, MenuComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -59,6 +61,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatSelectModule,
     MatTabsModule,
     MatRadioModule,
+    RouterModule,
     MatGridListModule
   ],
   exports: [
@@ -90,6 +93,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatSelectModule,
     MatTabsModule,
     MatRadioModule,
+    MenuComponent,
     MatGridListModule
   ]
 })

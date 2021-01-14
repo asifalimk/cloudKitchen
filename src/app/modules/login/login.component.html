@@ -1,7 +1,7 @@
 <div class="login-componenet w-100" fxLayoutAlign="center center">
-    <mat-card fxFlex.lt-sm="100"  class="login-card mat-elevation-z8">
+    <mat-card fxFlex.lt-sm="100" class="login-card mat-elevation-z8">
         <mat-card-content>
-            
+
             <div fxLayout="row" fxLayoutAlign="start center">
                 <img class="logo-image-small" src="assets/img/favicon.png">
                 <h1 class="mat-h1 m-0">Cloud Kitchen</h1>
@@ -10,26 +10,15 @@
             <form [formGroup]="loginForm" (ngSubmit)="login()" fxLayout="column">
                 <mat-form-field class="w-100 pt-5" appearance="outline">
                     <mat-label>UserName</mat-label>
-                    <input matInput formControlName="name" required>
+                    <input matInput formControlName="username" required>
                     <mat-error> username is required</mat-error>
                 </mat-form-field>
+                <mat-form-field fxFlex="70" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput required formControlName="password">
+                    <mat-error>password is required</mat-error>
+                </mat-form-field>
 
-                <div fxFlex="100" fxLayoutAlign="space-between center">
-
-                    <mat-form-field fxFlex="25" appearance="outline">
-                        <mat-label>Country Code</mat-label>
-                        <input matInput  required formControlName="code">
-                        <mat-error>country code is required</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field fxFlex="70" appearance="outline">
-                        <mat-label>Mobile</mat-label>
-                        <input matInput  required formControlName="mobile">
-                        <mat-error>mobile is required</mat-error>
-                    </mat-form-field>
-                </div>
-
-               
             </form>
         </mat-card-content>
         <div fxLayout="row wrap" fxLayoutAlign="flex-end center">

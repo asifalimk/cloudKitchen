@@ -1,0 +1,13 @@
+.horizontal-active-link{
+    background-color: #e0e0e0 !important;
+    border-radius: 0px 20px 20px 0px;
+    color:#51cbce; 
+}
+
+.horizontal-active-link .mat-icon{
+ color:#51cbce; 
+}
+
+.menu-buttonItem{
+    margin-left: 10px;
+}

@@ -7,7 +7,7 @@ import { OrdersService } from './orders.service';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.css']
+  styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
 
@@ -48,12 +48,6 @@ export class OrdersComponent implements OnInit {
       key: "name",
       type: "single",
       cols: []
-    },
-    {
-      name: "Action",
-      key: "InformationButton",
-      type: "menu",
-      cols: ["Accept", "Assign"]
     }
   ];
 
@@ -67,13 +61,16 @@ export class OrdersComponent implements OnInit {
 
   subscription: Subscription;
 
-  everyThirtySeconds: Observable<number> = timer(0, 30000);
+  // everyThirtySeconds: Observable<number> = timer(0, 30000);
 
   ngOnInit(): void {
-    this.subscription = this.everyThirtySeconds.subscribe(() => {
-      this.fetchOrders();
-      this.fetchOrdersStatus()
-    });
+
+    this.fetchOrders();
+    this.fetchOrdersStatus()
+      // this.subscription = this.everyThirtySeconds.subscribe(() => {
+      //   this.fetchOrders();
+      //   this.fetchOrdersStatus()
+      // });
   }
 
   ngOnDestroy() {
@@ -263,6 +260,7 @@ export class OrdersComponent implements OnInit {
 
   fetchOrdersStatus(): void {
     this.ordersService.getOrderStatusCount().subscribe((res: any) => {
+      console.log(res)
       this.orderStatus = res.success;
     })
   }
@@ -278,7 +276,7 @@ export class OrdersComponent implements OnInit {
 @Component({
   selector: 'orders-details-dialog',
   templateUrl: './orders-details-dialog.html',
-  styleUrls: ['./orders.component.css']
+  styleUrls: ['./orders.component.scss']
 })
 export class OrderDetailsDialog {
 

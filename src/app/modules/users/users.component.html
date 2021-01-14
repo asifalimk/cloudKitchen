@@ -1,0 +1,26 @@
+<mat-drawer-container class="h-100" [hasBackdrop]="false">
+    <mat-drawer mode="over" position="end" #drawer>
+        <div class="p-2">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <h3 class="m-0">Add User</h3>
+                <button (click)="drawer.close()" mat-icon-button color="primary">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </div>
+            <app-form-widget *ngIf="createFormStructure" [formStructure]="createFormStructure"
+                (saveButtonClicked)="onSubmit($event)"></app-form-widget>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="p-2">
+            <div class="mb-1" fxLayoutAlign="flex-end center">
+                <!-- routerLink="/admin/masters/coupens/create" -->
+                <button (click)="drawer.open()" mat-flat-button color="primary">
+                    <mat-icon>add</mat-icon> Add New User
+                </button>
+            </div>
+            <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData">
+            </app-table-widget>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

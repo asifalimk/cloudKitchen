@@ -16,22 +16,70 @@ export class CreateCoupensComponent implements OnInit {
    */
   formStructure: CoupensForm;
 
-  /**
-   * create form form group
-   */
-  createForm: FormGroup;
+  createFormStructure: any;
+
+
   public coupon;
   constructor(private http: HttpClient, private dynamicFormsService: DynamicFormsService, private coupensService: CoupensService) {
-    this.createForm = new FormGroup({
-      'title': new FormControl(null),
-      'description': new FormControl(null),
-      'status': new FormControl(false)
-    });
-
     this.getFormStructure();
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.createFormStructure = [
+      {
+        name: "Title",
+        formcontrol: "title",
+        type: "textbox",
+        placeholder: "title",
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Title Required"
+        }]
+      },
+      {
+        name: "Description",
+        formcontrol: "description",
+        type: "textArea",
+        placeholder: "description",
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Description Required"
+        }]
+      },
+      {
+        name: "Status",
+        formcontrol: "status",
+        type: "radio",
+        options: [{
+          id: 1,
+          name: 'Active',
+        },
+        {
+          id: 2,
+          name: 'In Active',
+        }],
+        placeholder: "status",
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Status Required"
+        }]
+      },
+      {
+        formcontrol: "coupon types",
+        type: "selectBox",
+        placeholder: "",
+        options: [],
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "coupon types Required"
+        }]
+      }
+    ]
+  }
 
   /**
     * @returns void
@@ -44,18 +92,18 @@ export class CreateCoupensComponent implements OnInit {
     })
   }
 
-  
+
   /**
    * create new category on sobmit
    */
-  onSubmit(): void {
+  onSubmit(data): void {
     const req = {
       "action": "create",
       "post": "coupons",
-      "content": this.createForm.value
+      "content": data
     }
 
-    console.log(req)
+    // console.log(req)
     this.coupensService.addCoupons(req).subscribe(res => {
       console.log(res)
     })

@@ -33,15 +33,25 @@ export class AuthService {
     return this.user;
   }
 
-  //TODO
+
   /**
- * Return true if the user is recruiter
+ * Return true if the user is Admin
  * @returns boolean
  */
   isAdmin(): boolean {
     return !!this.token && this.user.role == 'Admin';
   }
 
+
+  /**
+   * 
+   * Return true if the user is Admin
+   * @returns boolean
+   * 
+   */
+  isRootAdmin(): boolean {
+    return !!this.token && this.user.role == 'Root';
+  }
 
 
   /**
@@ -50,7 +60,7 @@ export class AuthService {
  * @returns Observable
  */
   login(req: LoginRequest): Observable<boolean> {
-    return this.httpClient.post<any>(`${environment.url}/authenticate`, req)
+    return this.httpClient.post<any>(`${environment.url}/login`, req)
       .pipe(
         map((data: any) => {
           // save the token in the web storage
@@ -90,7 +100,7 @@ export class AuthService {
   /**
     * Logout and clear the in memory storage of user
     */
-   //TODO Change or remove logout api call and add subject behaviour without window reloading
+  //TODO Change or remove logout api call and add subject behaviour without window reloading
   logout(): Observable<any> {
     // clear the token from the web storage
     this.clearWebToken();

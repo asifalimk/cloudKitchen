@@ -1,9 +1,8 @@
 <div class="nav-bar">
   <mat-toolbar>
-    <span>{{getTitle()}}</span>
     <div class="w-100" fxLayoutAlign="flex-end center" fxLayoutGap="10px">
     
-        <mat-chip-list #chipList >
+        <mat-chip-list #chipList *ngIf="isRootAdmin" >
           <mat-chip [matMenuTriggerFor]="stores" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
             <mat-icon>store</mat-icon>
             <span>Store 1</span>

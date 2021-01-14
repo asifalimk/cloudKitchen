@@ -46,7 +46,8 @@
                         <mat-form-field appearance="outline">
                             <mat-label>{{item?.name}}</mat-label>
                             <mat-select [formControlName]="item.formcontrol" [placeholder]="item?.placeholder">
-                                <mat-option *ngFor="let options of item?.options" [value]="options.id">{{options.content.title}}</mat-option>
+                                <mat-option *ngFor="let options of item?.options" [value]="options.id">
+                                    {{options?.content?.title}}</mat-option>
                             </mat-select>
                             <mat-error *ngFor="let validation of item.validators">
                                 <ng-container
@@ -65,28 +66,34 @@
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'image'">
-                        <div>
-                            <button (click)="imageUpload.click()" mat-stroked-button color="primary">
-                                <mat-icon>attachment</mat-icon>
-                                Choose File
-                            </button>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                            <div>
+                                <button type="button" (click)="imageUpload.click()" mat-stroked-button color="primary">
+                                    <mat-icon>attachment</mat-icon>
+                                    Choose File
+                                </button>
+                            </div>
+                            <div class="preview-container">
+                                <img class="preview-img" *ngIf="imageUrlTemp" [src]="imageUrlTemp" alt="post-image">
+                                <mat-icon color="primary" *ngIf="imageUrlTemp" class="close-preview"
+                                    (click)="closeImagePreview()">cancel
+                                </mat-icon>
+                            </div>
+                            <input #imageUpload type="file" style="display:none" (change)="onFileChange($event)"
+                                accept="image/*">
                         </div>
-                        <div class="preview-container">
-                            <img class="preview-image" *ngIf="imageUrlTemp" [src]="imageUrlTemp" alt="post-image">
-                            <mat-icon color="primary" *ngIf="imageUrlTemp" class="close-preview" (click)="closeImagePreview()">cancel</mat-icon>
-                        </div>
-                        <input  #imageUpload type="file" style="display:none" (change)="onFileChange($event)" accept="image/*">
                     </ng-container>
 
                     <ng-container *ngSwitchCase="'radio'">
-                        <mat-radio-group aria-label="Select an option" [formControlName]="item.formcontrol" class="pb-2" fxLayoutGap="10px">
-                            <mat-radio-button color="primary" *ngFor="let options of item?.options" [value]="options.id">{{options?.name}}
+                        <mat-radio-group aria-label="Select an option" [formControlName]="item.formcontrol" class="pb-2"
+                            fxLayoutGap="10px">
+                            <mat-radio-button color="primary" *ngFor="let options of item?.options"
+                                [value]="options.id">{{options?.name}}
                             </mat-radio-button>
                         </mat-radio-group>
-                    
+
                         <mat-error *ngFor="let validation of item.validators">
-                            <ng-container
-                                *ngIf="formGroup.controls[item.formcontrol].errors">
+                            <ng-container *ngIf="formGroup.controls[item.formcontrol].errors">
                                 <span *ngIf="formGroup.controls[item.formcontrol].errors[validation.name]">
                                     {{validation.message}}
                                 </span>

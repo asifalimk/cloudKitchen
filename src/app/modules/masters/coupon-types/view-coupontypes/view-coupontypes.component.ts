@@ -13,6 +13,40 @@ export class ViewCouponTypesComponent implements OnInit {
    */
   couponTypes: CouponTypes;
 
+  public columnStructure: any = [
+    {
+      name: "Id",
+      key: "id",
+      type: "single",
+      cols: []
+    },
+    {
+      name: "Title",
+      key: "title",
+      parent: "content",
+      type: "single",
+      cols: ["title"]
+    },  
+    {
+      name: "Description",
+      key: "description",
+      parent: "content",
+      type: "single",
+      cols: ["description"]
+    },
+  ];
+
+  public tableWidgetData: {
+    columnStructure: Array<object>,
+    tableName: string,
+    data: any,
+    statusInfoNChanges: object,
+    tableSearch: boolean
+
+  };
+
+  public tableData: any;
+
   constructor(private couponTypesService: CouponTypesService) {
     this.getCouponTypes();
   }
@@ -20,6 +54,16 @@ export class ViewCouponTypesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  async initTableData() {
+    this.tableWidgetData = {
+      columnStructure: this.columnStructure,
+      data: this.couponTypes.message,
+      statusInfoNChanges: [],
+      tableSearch: true,
+      tableName: "Coupon Types",
+    };
+
+  }
 
   /**
    * @returns void
@@ -29,6 +73,7 @@ export class ViewCouponTypesComponent implements OnInit {
     this.couponTypesService.fetchCouponTypes().subscribe((res:CouponTypes) => {
       console.log(res);
       this.couponTypes = res;
+      this.initTableData();
     })
   }
 
