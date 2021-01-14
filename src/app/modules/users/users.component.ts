@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Users, UsersService, UserData } from './users.service';
 
 @Component({
@@ -10,6 +12,7 @@ export class UsersComponent implements OnInit {
 
   createFormStructure: any
   users: UserData;
+  @ViewChild('drawer') public drawer: MatSidenav;
 
   public tableWidgetData: {
     columnStructure: Array<object>,
@@ -40,12 +43,6 @@ export class UsersComponent implements OnInit {
       cols: []
     },
     {
-      name: "mobile",
-      key: "mobile",
-      type: "single",
-      cols: []
-    },
-    {
       name: "role",
       key: "role",
       type: "single",
@@ -53,21 +50,11 @@ export class UsersComponent implements OnInit {
     },
   ];
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
+
     this.createFormStructure = [
-      {
-        name: "Name",
-        formcontrol: "name",
-        type: "textbox",
-        placeholder: "name",
-        validators: [{
-          name: "required",
-          validator: "required",
-          message: "Name is Required"
-        }]
-      },
       {
         name: "User Name",
         formcontrol: "username",
@@ -80,17 +67,18 @@ export class UsersComponent implements OnInit {
         }]
       },
       {
-        name: "Mobile Number",
-        formcontrol: "mobile",
+        name: "Password",
+        formcontrol: "password",
         type: "textbox",
-        placeholder: "Mobile Number",
+        placeholder: "Password",
         validators: [{
           name: "required",
           validator: "required",
-          message: "Mobile Number is Required"
+          message: "Password is Required"
         }]
       },
       {
+        name: "Role",
         formcontrol: "role",
         type: "selectBox",
         placeholder: "Role",
@@ -99,6 +87,18 @@ export class UsersComponent implements OnInit {
           content: {
             title: 'Admin'
           }
+        },
+        {
+          id: 'staff',
+          content: {
+            title: 'Staff'
+          }
+        },
+        {
+          id: 'delivery',
+          content: {
+            title: 'Delivery Boy'
+          }
         }],
         validators: [{
           name: "required",
@@ -106,15 +106,36 @@ export class UsersComponent implements OnInit {
           message: "Role Required"
         }]
       },
+      {
+        name: "Store",
+        formcontrol: "store",
+        type: "selectBox",
+        placeholder: "Store",
+        options: [{
+          id: 1,
+          content: {
+            title: 'Kozhikode'
+          }
+        }
+        ],
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Store Required"
+        }]
+      },
     ]
 
     this.getUsers();
   }
 
-
+  /**
+   * 
+   *
+   */
   getUsers(): void {
     this.usersService.fetchUsers().subscribe((res: Users) => {
-      this.users = res.message;
+      this.users = res.message
       this.initTableData();
     })
   }
@@ -124,7 +145,11 @@ export class UsersComponent implements OnInit {
    * @param data 
    */
   onSubmit(data): void {
-    console.log(data)
+    this.usersService.addUsers(data).subscribe(res => {
+      this._snackBar.open("User Created", '×', { panelClass: 'snackbar-success', duration: 3000 });
+      this.drawer.close();
+      this.getUsers();
+    })
   }
 
   async initTableData() {

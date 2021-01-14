@@ -23,6 +23,15 @@ export class UsersService {
         )
       );
   }
+
+  addUsers(req:UserReq): Observable<any> {
+    return this.httpClient.post<any>(`${environment.url}/register`,req)
+      .pipe(
+        tap((data) => { },
+          (error: any) => throwError(error)
+        )
+      );
+  }
 }
 
 
@@ -53,4 +62,12 @@ export interface UserData {
 
 interface Content {
   location: string;
+}
+
+
+interface UserReq {
+  username: string;
+  password: string;
+  role: string;
+  store: number;
 }
