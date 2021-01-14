@@ -30,6 +30,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatRadioModule} from '@angular/material/radio';
 import { MenuComponent } from './components/menu/menu.component';
 import { RouterModule } from '@angular/router';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [TableWidgetComponent, TimeAgoPipe, FormWidgetComponent, MenuComponent],
@@ -60,7 +61,8 @@ import { RouterModule } from '@angular/router';
     MatSelectModule,
     MatTabsModule,
     MatRadioModule,
-    RouterModule
+    RouterModule,
+    MatGridListModule
   ],
   exports: [
     FormsModule,
@@ -91,7 +93,8 @@ import { RouterModule } from '@angular/router';
     MatSelectModule,
     MatTabsModule,
     MatRadioModule,
-    MenuComponent
+    MenuComponent,
+    MatGridListModule
   ]
 })
 export class SharedModule { }

@@ -1,0 +1,69 @@
+.bordered-icon{
+    border-radius: 50%;
+    width:55px;
+    height: 55px; 
+}
+
+.card{
+    border-radius: 10px;
+}
+
+.order-container{
+    overflow: hidden;
+}
+
+
+
+.mat-card:not([class*=mat-elevation-z]) {
+    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+  }
+
+  .example-button-row {
+    display: table-cell;
+    width: 490px;
+  }
+  
+  .example-button-row .mat-button-base {
+    margin: 8px 8px 8px 0;
+  }
+
+  .orders-component{
+   overflow: auto;
+  }
+
+  .mat-drawer{
+	background-color: #f4f3ef !important;
+  }
+
+ /** Making child sidenav global */
+.global-sidenav-content {
+	
+	.mat-drawer-backdrop {
+		position: fixed;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+	}
+	
+	
+	.content-container {
+		// height: calc(100vh - 50px - 24px - 20px) !important;
+		height: 100vh;
+	}
+	
+	mat-drawer-container {
+		// height: calc(100vh - 50px - 24px - 20px) !important;
+		// height: 100vh !important;
+		height: calc(100vh - 50px) !important;
+		
+		mat-drawer-content {
+			overflow: hidden !important;
+		}
+	}
+	
+	
+	mat-sidenav:first-child {
+		height: 100vh;
+	}
+}

@@ -318,7 +318,6 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
 
 
 .mat-drawer-container{
-  height: 100vh;
-  overflow: auto;
+  overflow: hidden;
   background-color: #f4f3ef !important;
 }
