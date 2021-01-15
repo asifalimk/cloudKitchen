@@ -31,6 +31,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { MenuComponent } from './components/menu/menu.component';
 import { RouterModule } from '@angular/router';
 import {MatGridListModule} from '@angular/material/grid-list';
+import {MatStepperModule  } from '@angular/material/stepper';
 
 @NgModule({
   declarations: [TableWidgetComponent, TimeAgoPipe, FormWidgetComponent, MenuComponent],
@@ -62,7 +63,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatTabsModule,
     MatRadioModule,
     RouterModule,
-    MatGridListModule
+    MatGridListModule,
+    MatStepperModule
   ],
   exports: [
     FormsModule,
@@ -94,7 +96,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatTabsModule,
     MatRadioModule,
     MenuComponent,
-    MatGridListModule
+    MatGridListModule,
+    MatStepperModule
   ]
 })
 export class SharedModule { }

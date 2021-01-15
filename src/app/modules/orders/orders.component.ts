@@ -4,6 +4,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { OrdersService } from './orders.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -13,6 +15,7 @@ export class OrdersComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private ordersService: OrdersService) { }
   @ViewChild('drawer', { static: false }) drawer: MatSidenav;
+  @ViewChild('stepper') stepper: MatStepper;
   public tableData: any;
   public orderDetails: any;
   public items: any;
@@ -23,10 +26,19 @@ export class OrdersComponent implements OnInit {
   public selectionChanged: any;
   public navDetailsColoumns = ['item', 'quantity', 'price']
   public navColoumns = ['item', 'quantity', 'status']
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
   public columnStructure: any = [
     {
       name: "#",
       key: "id",
+      type: "index",
+      cols: []
+    },
+    {
+      name: "Order Number",
+      parent:"content",
+      key: "orderNo",
       type: "single",
       cols: []
     },
@@ -34,19 +46,34 @@ export class OrdersComponent implements OnInit {
       name: "User",
       key: "user",
       type: "group",
-      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, { "key": "schedule", "icon": "schedule" }]
+      cols: [{ "key": "name", "icon": "person" ,"type":"object"},
+      { "key": "mobile", "icon": "smartphone" ,"type":"object"},
+      { "key": "location", "icon": "room" ,"type":"object"}]
     },
     {
-      name: "Time",
-      key: "created_at",
-      type: "date",
-      cols: []
+      name: "Items",
+      key: "items",
+      type: "group",
+      cols: [{ "key": "line_1","type":"array"}]
+    },
+    {
+      name: "Delivery Address",
+      key: "deliveryAddress",
+      type: "group",
+      cols: [{ "key": "line_1","type":"object"},
+      { "key": "line_2" ,"type":"object"}]
     },
     {
       name: "payment",
       parent: "payment",
       key: "name",
       type: "single",
+      cols: []
+    },
+    {
+      name: "Time",
+      key: "created_at",
+      type: "date",
       cols: []
     }
   ];
@@ -99,6 +126,7 @@ export class OrdersComponent implements OnInit {
   rowClicked(data: any) {
     // this.openDialog(data);
     this.fetchDetails(data.id)
+    // this.stepper.selectedIndex = this.orderDetails.order.content.status;
     if (!this.drawer.opened) {
       this.drawer.open();
     } else {
@@ -155,6 +183,11 @@ export class OrdersComponent implements OnInit {
     this.fetchOrderItemDetails(data.id);
   }
 
+  reload(): void {
+    this.fetchDetails(this.orderDetails.order.id)
+
+  }
+
   changeStatus(data): void {
     if (data.type === "Accept") {
       const req = {
@@ -177,7 +210,7 @@ export class OrdersComponent implements OnInit {
     };
 
     this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
-      this.drawer.close();
+      this.fetchDetails(this.orderDetails.order.id)
     })
 
 
@@ -190,7 +223,6 @@ export class OrdersComponent implements OnInit {
     };
 
     this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
-      this.drawer.close();
     })
 
   }
@@ -209,22 +241,17 @@ export class OrdersComponent implements OnInit {
 
   onDeliveryDetailsEdit(): void {
     this.setDeliveryBoy = true;
-    // this.orderDetails.order.content.status = 3;
-    // this.orderDetails.order.content.deliveryBoy = null;
-    // this.drawer.close();
-    // this.drawer.open();
   }
 
   fetchDetails(id): void {
     this.ordersService.getOrderDetails(id).subscribe((res: any) => {
       this.orderDetails = res.success;
       this.items = this.orderDetails.order.item;
-      console.log(this.orderDetails);
+      this.stepper.selectedIndex = this.orderDetails.order.content.status-1;
+      console.log(this.stepper.selectedIndex);
       if (this.orderDetails.order.content.readyToDeliver) {
         this.ordersService.getDeliveryBoys().subscribe((res: any) => {
           this.deliveryBoys = res.success;
-          // this.deliverItems = this.orderDetails.order.items;
-          // console.log(this.deliverItems);
         })
       }
     })
