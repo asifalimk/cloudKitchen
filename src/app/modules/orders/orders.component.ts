@@ -4,6 +4,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSidenav } from '@angular/material/sidenav';
 import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { OrdersService } from './orders.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -13,6 +15,7 @@ export class OrdersComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private ordersService: OrdersService) { }
   @ViewChild('drawer', { static: false }) drawer: MatSidenav;
+  @ViewChild('stepper') stepper: MatStepper;
   public tableData: any;
   public orderDetails: any;
   public items: any;
@@ -21,8 +24,10 @@ export class OrdersComponent implements OnInit {
   public orderStatus: any;
   public setDeliveryBoy: boolean;
   public selectionChanged: any;
-  public navDetailsColoumns = ['item', 'quantity','price']
+  public navDetailsColoumns = ['item', 'quantity', 'price']
   public navColoumns = ['item', 'quantity', 'status']
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
   public columnStructure: any = [
     {
       name: "#",
@@ -34,7 +39,9 @@ export class OrdersComponent implements OnInit {
       name: "User",
       key: "user",
       type: "group",
-      cols: [{ "key": "name", "icon": "person" }, { "key": "mobile", "icon": "smartphone" }, { "key": "schedule", "icon": "schedule" }]
+      cols: [{ "key": "name", "icon": "person" },
+      { "key": "mobile", "icon": "smartphone" },
+      { "key": "location", "icon": "room" }]
     },
     {
       name: "Time",
@@ -67,10 +74,10 @@ export class OrdersComponent implements OnInit {
 
     this.fetchOrders();
     this.fetchOrdersStatus()
-      // this.subscription = this.everyThirtySeconds.subscribe(() => {
-      //   this.fetchOrders();
-      //   this.fetchOrdersStatus()
-      // });
+    // this.subscription = this.everyThirtySeconds.subscribe(() => {
+    //   this.fetchOrders();
+    //   this.fetchOrdersStatus()
+    // });
   }
 
   ngOnDestroy() {
@@ -92,14 +99,14 @@ export class OrdersComponent implements OnInit {
    * 
    * @param data 
    */
-  print()
-  {
+  print() {
     this.openDialog(this.orderDetails.order);
     this.drawer.close();
   }
   rowClicked(data: any) {
     // this.openDialog(data);
     this.fetchDetails(data.id)
+    // this.stepper.selectedIndex = this.orderDetails.order.content.status;
     if (!this.drawer.opened) {
       this.drawer.open();
     } else {
@@ -123,14 +130,13 @@ export class OrdersComponent implements OnInit {
   }
 
   onChangeSelect(event: any) {
-    if(event.value!=null)
-    {
+    if (event.value != null) {
       // this.selectionChanged = true;
       this.ordersService.getDeliveryBoyDetails(event.value).subscribe((res: any) => {
-      this.selectionChanged = res.success;
+        this.selectionChanged = res.success;
       })
     }
-    
+
   }
 
   onOrderUpdate() {
@@ -144,7 +150,7 @@ export class OrdersComponent implements OnInit {
       this.setDeliveryBoy = false;
       this.drawer.close();
     })
-  } 
+  }
   close(data: any) {
     this.drawer.close();
   }
@@ -155,6 +161,11 @@ export class OrdersComponent implements OnInit {
 
   openDialog(data): void {
     this.fetchOrderItemDetails(data.id);
+  }
+
+  reload(): void {
+    this.fetchDetails(this.orderDetails.order.id)
+
   }
 
   changeStatus(data): void {
@@ -173,27 +184,26 @@ export class OrdersComponent implements OnInit {
   }
 
   onAccept(): void {
-      const req = {
-        "id": this.orderDetails.order.id,
-        "status": 2
-      };
+    const req = {
+      "id": this.orderDetails.order.id,
+      "status": 2
+    };
 
-      this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
-        this.drawer.close();
-      })
-    
+    this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+      this.fetchDetails(this.orderDetails.order.id)
+    })
+
 
   }
 
   onReject(): void {
-      const req = {
-        "id": this.orderDetails.order.id,
-        "status": 7
-      };
+    const req = {
+      "id": this.orderDetails.order.id,
+      "status": 7
+    };
 
-      this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
-        this.drawer.close();
-      })
+    this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+    })
 
   }
 
@@ -207,7 +217,7 @@ export class OrdersComponent implements OnInit {
       this.drawer.close();
     })
 
-}
+  }
 
   onDeliveryDetailsEdit(): void {
     this.setDeliveryBoy = true;
@@ -221,7 +231,9 @@ export class OrdersComponent implements OnInit {
     this.ordersService.getOrderDetails(id).subscribe((res: any) => {
       this.orderDetails = res.success;
       this.items = this.orderDetails.order.item;
-      console.log(this.orderDetails);
+      
+      this.stepper.selectedIndex = this.orderDetails.order.content.status-1;
+      console.log(this.stepper.selectedIndex);
       if (this.orderDetails.order.content.readyToDeliver) {
         this.ordersService.getDeliveryBoys().subscribe((res: any) => {
           this.deliveryBoys = res.success;
