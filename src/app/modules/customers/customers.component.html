@@ -5,10 +5,33 @@
 <div class="p-2">
     <mat-card class="p-0 mat-elevation-z0" fxLayout="row">
         <img class="product-img"
-            src="https://phplaravel-401379-1623642.cloudwaysapps.com/storage/media/category/Seven Seas Fish.jpg"
-            alt="">
-            <!-- <div style="background-color: green;height: 100%;">
-111
-            </div> -->
+            src="https://phplaravel-401379-1623642.cloudwaysapps.com/storage/media/category/Seven Seas Fish.jpg">
+        <div fxLayout="column" class="p-2 pb-0">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <h3 class="mat-h3">Sugar Heist – Bakes and Raw materials</h3>
+                <mat-icon>close</mat-icon>
+            </div>
+            <div fxLayout="row">
+                <p>Cakes</p>/<p>Bakes</p>
+                <mat-icon>visibility</mat-icon>
+                <mat-icon>favorite_border</mat-icon>
+                <mat-icon>share</mat-icon>
+                <mat-icon>bookmark_border</mat-icon>
+                <img class="user"
+                    src="https://phplaravel-401379-1623642.cloudwaysapps.com/storage/media/category/Seven Seas Fish.jpg">
+
+            </div>
+            <div class="w-100" fxLayout="row" fxLayoutAlign="space-between center">
+                <p class="m-0">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                <a>Raed More</a>
+            </div>
+        </div>
+
     </mat-card>
+</div>
+
+<div class="customer-component">
+    <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData"
+        (toogleButtonSelected)="changeStatus($event)">
+    </app-table-widget>
 </div>

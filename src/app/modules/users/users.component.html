@@ -12,14 +12,15 @@
         </div>
     </mat-drawer>
     <mat-drawer-content>
-        <div class="p-2">
+        <div class="p-2 user-component">
             <div class="mb-1" fxLayoutAlign="flex-end center">
                 <!-- routerLink="/admin/masters/coupens/create" -->
                 <button (click)="drawer.open()" mat-flat-button color="primary">
                     <mat-icon>add</mat-icon> Add New User
                 </button>
             </div>
-            <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData">
+            <app-table-widget *ngIf="tableWidgetData" [tableData]="tableWidgetData"
+                (toogleButtonSelected)="changeStatus($event)">
             </app-table-widget>
         </div>
     </mat-drawer-content>

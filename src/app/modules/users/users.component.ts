@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Users, UsersService, UserData } from './users.service';
@@ -43,14 +44,26 @@ export class UsersComponent implements OnInit {
       cols: []
     },
     {
+      name: "mobile",
+      key: "mobile",
+      type: "single",
+      cols: []
+    },
+    {
       name: "role",
       key: "role",
       type: "single",
       cols: []
     },
+    {
+      name: "Status",
+      key: "status",
+      type: "toogle",
+      cols: []
+    },
   ];
 
-  constructor(private usersService: UsersService, private _snackBar: MatSnackBar) { }
+  constructor(private usersService: UsersService, private _snackBar: MatSnackBar,public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
@@ -75,6 +88,17 @@ export class UsersComponent implements OnInit {
           name: "required",
           validator: "required",
           message: "Password is Required"
+        }]
+      },
+      {
+        name: "Mobile",
+        formcontrol: "mobile",
+        type: "textbox",
+        placeholder: "mobile",
+        validators: [{
+          name: "required",
+          validator: "required",
+          message: "Mobile is Required"
         }]
       },
       {
@@ -136,6 +160,7 @@ export class UsersComponent implements OnInit {
   getUsers(): void {
     this.usersService.fetchUsers().subscribe((res: Users) => {
       this.users = res.message
+      console.log(res)
       this.initTableData();
     })
   }
@@ -162,4 +187,41 @@ export class UsersComponent implements OnInit {
     };
 
   }
+
+  /**
+   * 
+   * @param event 
+   * change status
+   */
+  changeStatus(event){
+    console.log(event);
+    const dialogRef = this.dialog.open(UserStatusDialog, {
+      width: '300px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(result);
+    });
+  }
+}
+
+
+@Component({
+  selector: 'user-status-dialog',
+  templateUrl: './user-status-dialog.html',
+  styleUrls: ['./users.component.css']
+})
+export class UserStatusDialog{
+  constructor(public dialogRef: MatDialogRef<UserStatusDialog>){
+    
+  }
+
+  onYesClick(): void {
+    this.dialogRef.close(true);
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close(false);
+  }
+
 }

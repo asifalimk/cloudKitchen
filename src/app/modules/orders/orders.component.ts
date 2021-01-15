@@ -21,7 +21,7 @@ export class OrdersComponent implements OnInit {
   public orderStatus: any;
   public setDeliveryBoy: boolean;
   public selectionChanged: any;
-  public navDetailsColoumns = ['item', 'quantity','price']
+  public navDetailsColoumns = ['item', 'quantity', 'price']
   public navColoumns = ['item', 'quantity', 'status']
   public columnStructure: any = [
     {
@@ -67,14 +67,14 @@ export class OrdersComponent implements OnInit {
 
     this.fetchOrders();
     this.fetchOrdersStatus()
-      // this.subscription = this.everyThirtySeconds.subscribe(() => {
-      //   this.fetchOrders();
-      //   this.fetchOrdersStatus()
-      // });
+    // this.subscription = this.everyThirtySeconds.subscribe(() => {
+    //   this.fetchOrders();
+    //   this.fetchOrdersStatus()
+    // });
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 
 
@@ -92,8 +92,7 @@ export class OrdersComponent implements OnInit {
    * 
    * @param data 
    */
-  print()
-  {
+  print() {
     this.openDialog(this.orderDetails.order);
     this.drawer.close();
   }
@@ -123,14 +122,13 @@ export class OrdersComponent implements OnInit {
   }
 
   onChangeSelect(event: any) {
-    if(event.value!=null)
-    {
+    if (event.value != null) {
       // this.selectionChanged = true;
       this.ordersService.getDeliveryBoyDetails(event.value).subscribe((res: any) => {
-      this.selectionChanged = res.success;
+        this.selectionChanged = res.success;
       })
     }
-    
+
   }
 
   onOrderUpdate() {
@@ -144,7 +142,7 @@ export class OrdersComponent implements OnInit {
       this.setDeliveryBoy = false;
       this.drawer.close();
     })
-  } 
+  }
   close(data: any) {
     this.drawer.close();
   }
@@ -173,27 +171,27 @@ export class OrdersComponent implements OnInit {
   }
 
   onAccept(): void {
-      const req = {
-        "id": this.orderDetails.order.id,
-        "status": 2
-      };
+    const req = {
+      "id": this.orderDetails.order.id,
+      "status": 2
+    };
 
-      this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
-        this.drawer.close();
-      })
-    
+    this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+      this.drawer.close();
+    })
+
 
   }
 
   onReject(): void {
-      const req = {
-        "id": this.orderDetails.order.id,
-        "status": 7
-      };
+    const req = {
+      "id": this.orderDetails.order.id,
+      "status": 7
+    };
 
-      this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
-        this.drawer.close();
-      })
+    this.ordersService.changeOrderStatus(req).subscribe((res: any) => {
+      this.drawer.close();
+    })
 
   }
 
@@ -207,7 +205,7 @@ export class OrdersComponent implements OnInit {
       this.drawer.close();
     })
 
-}
+  }
 
   onDeliveryDetailsEdit(): void {
     this.setDeliveryBoy = true;
