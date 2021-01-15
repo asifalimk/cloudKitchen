@@ -35,6 +35,9 @@ export class TableWidgetComponent implements OnInit {
 
 	@Output() matMenuClicked = new EventEmitter<any>();
 
+	@Output() toogleButtonSelected = new EventEmitter<any>();
+
+
 	public bulkActions: object;
 
 	public tableSearch: boolean;
@@ -163,6 +166,10 @@ export class TableWidgetComponent implements OnInit {
 	 */
 	matMenuItemClicked(row: any,type: string) {
 		this.matMenuClicked.emit({data:row,type:type});
+	}
+
+	toogleButtonChecked(event){
+      this.toogleButtonSelected.emit(event)
 	}
 
 }
