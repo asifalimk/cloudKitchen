@@ -51,7 +51,7 @@
 					</mat-checkbox>
 				</mat-header-cell>
 
-				<mat-cell class="table-cell-padding position-relative" *cdkCellDef="let row;let j=index"
+				<mat-cell class="table-cell-padding position-relative" *cdkCellDef="let row; let j = dataIndex"
 					(click)="(column.type === 'status' || column.type === 'grouped_button'  || column.type === 'toggle_slider' || column.type === 'select') ? $event.stopPropagation() : ''"
 					[style]="column.type === 'status' ? 'width: 300px; max-width: 300px;' : ''">
 					<!-- Status Column -->
@@ -121,7 +121,7 @@
 							</ng-template>
 						</div>
 
-						<!-- single -->
+						<!-- index -->
 						<div *ngSwitchCase="'index'">
 							{{ j+ 1}}
 						</div>
