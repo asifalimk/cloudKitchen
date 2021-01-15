@@ -32,6 +32,13 @@ export class OrdersComponent implements OnInit {
     {
       name: "#",
       key: "id",
+      type: "index",
+      cols: []
+    },
+    {
+      name: "Order Number",
+      parent:"content",
+      key: "orderNo",
       type: "single",
       cols: []
     },
@@ -39,21 +46,34 @@ export class OrdersComponent implements OnInit {
       name: "User",
       key: "user",
       type: "group",
-      cols: [{ "key": "name", "icon": "person" },
-      { "key": "mobile", "icon": "smartphone" },
-      { "key": "location", "icon": "room" }]
+      cols: [{ "key": "name", "icon": "person" ,"type":"object"},
+      { "key": "mobile", "icon": "smartphone" ,"type":"object"},
+      { "key": "location", "icon": "room" ,"type":"object"}]
     },
     {
-      name: "Time",
-      key: "created_at",
-      type: "date",
-      cols: []
+      name: "Items",
+      key: "items",
+      type: "group",
+      cols: [{ "key": "line_1","type":"array"}]
+    },
+    {
+      name: "Delivery Address",
+      key: "deliveryAddress",
+      type: "group",
+      cols: [{ "key": "line_1","type":"object"},
+      { "key": "line_2" ,"type":"object"}]
     },
     {
       name: "payment",
       parent: "payment",
       key: "name",
       type: "single",
+      cols: []
+    },
+    {
+      name: "Time",
+      key: "created_at",
+      type: "date",
       cols: []
     }
   ];
@@ -221,24 +241,17 @@ export class OrdersComponent implements OnInit {
 
   onDeliveryDetailsEdit(): void {
     this.setDeliveryBoy = true;
-    // this.orderDetails.order.content.status = 3;
-    // this.orderDetails.order.content.deliveryBoy = null;
-    // this.drawer.close();
-    // this.drawer.open();
   }
 
   fetchDetails(id): void {
     this.ordersService.getOrderDetails(id).subscribe((res: any) => {
       this.orderDetails = res.success;
       this.items = this.orderDetails.order.item;
-      
       this.stepper.selectedIndex = this.orderDetails.order.content.status-1;
       console.log(this.stepper.selectedIndex);
       if (this.orderDetails.order.content.readyToDeliver) {
         this.ordersService.getDeliveryBoys().subscribe((res: any) => {
           this.deliveryBoys = res.success;
-          // this.deliverItems = this.orderDetails.order.items;
-          // console.log(this.deliverItems);
         })
       }
     })

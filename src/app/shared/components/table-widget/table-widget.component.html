@@ -51,7 +51,7 @@
 					</mat-checkbox>
 				</mat-header-cell>
 
-				<mat-cell class="table-cell-padding position-relative" *cdkCellDef="let row"
+				<mat-cell class="table-cell-padding position-relative" *cdkCellDef="let row;let j=index"
 					(click)="(column.type === 'status' || column.type === 'grouped_button'  || column.type === 'toggle_slider' || column.type === 'select') ? $event.stopPropagation() : ''"
 					[style]="column.type === 'status' ? 'width: 300px; max-width: 300px;' : ''">
 					<!-- Status Column -->
@@ -93,8 +93,20 @@
 						<div fxLayout="column" *ngSwitchCase="'group'">
 							<ng-container *ngFor="let items of column.cols">
 								<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-									<mat-icon class="table-icon" color="accent">{{items?.icon}}</mat-icon>
-									<span class="fw-12">{{ row[column.key][items.key] }}</span>
+									<div *ngIf="items?.type==='array'">
+										<span fxLayout="row" *ngIf="row[column.key][0]" class="fw-12">{{
+											row[column.key][0].item }}</span>
+										<span fxLayout="row" *ngIf="row[column.key][1]" class="fw-12">{{
+											row[column.key][1].item }}</span>
+										<span fxLayout="row" *ngIf="row[column.key][2]" class="fw-12">{{
+											row[column.key][2].item }}</span>
+									</div>
+									<ng-container *ngIf="items?.type==='object'">
+										<div *ngIf="items?.icon">
+											<mat-icon class="table-icon" color="accent">{{items?.icon}}</mat-icon>
+										</div>
+										<span class="fw-12">{{ row[column.key][items.key] }}</span>
+									</ng-container>
 								</div>
 							</ng-container>
 						</div>
@@ -107,6 +119,11 @@
 							<ng-template #singleKey>
 								{{ row[column.key]}}
 							</ng-template>
+						</div>
+
+						<!-- single -->
+						<div *ngSwitchCase="'index'">
+							{{ j+ 1}}
 						</div>
 
 						<!-- date {{ row[column.key] | date: 'dd/MM/yyyy'}}-->
